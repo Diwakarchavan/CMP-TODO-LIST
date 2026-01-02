@@ -54,7 +54,7 @@ actual class LocalNotificationManager {
        return true
     }
 
-    actual suspend fun requestPermission(): Boolean = suspendCoroutine { continuation ->
+    actual suspend fun requestPermission(activity: Any?): Boolean = suspendCoroutine { continuation ->
         val center = UNUserNotificationCenter.currentNotificationCenter()
         val options = UNAuthorizationOptionAlert or UNAuthorizationOptionSound or UNAuthorizationOptionBadge
 

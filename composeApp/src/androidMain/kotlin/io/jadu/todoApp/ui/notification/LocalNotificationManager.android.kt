@@ -1,6 +1,7 @@
 package io.jadu.todoApp.ui.notification
 
 import android.Manifest
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -64,24 +65,30 @@ actual class LocalNotificationManager (
         }
     }
 
-    actual suspend fun requestPermission(): Boolean {
+    actual suspend fun requestPermission(activity: Any?): Boolean {
         if (hasPermission()) return true
 
-        // for Android 13
+        // For Android 13+
         if (Build.VERSION.SDK_INT >= 33) {
-            val activity = PlatformActivityProvider.currentActivity
-            if (activity!=null) {
+            // Cast the platform-agnostic activity parameter to Android Activity
+            val androidActivity = activity as? Activity
+
+            if (androidActivity != null) {
                 ActivityCompat.requestPermissions(
-                    activity,
+                    androidActivity,
                     arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                    123 // Request Code
+                    REQUEST_CODE_POST_NOTIFICATIONS
                 )
                 return false
             } else {
-                println("LocalNotificationService needs an Activity Context to request permissions")
+                println("LocalNotificationManager: Activity required to request notification permission")
                 return false
             }
         }
         return true
+    }
+
+    companion object {
+        private const val REQUEST_CODE_POST_NOTIFICATIONS = 123
     }
 }

@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import io.jadu.todoApp.ui.notification.NotificationViewModel
+import io.jadu.todoApp.ui.notification.rememberActivity
 import io.jadu.todoApp.ui.route.NavRoute
 import io.jadu.todoApp.ui.theme.BodyLarge
 import io.jadu.todoApp.ui.theme.Spacing
@@ -38,6 +39,7 @@ fun HomePageContent(
     notificationVM: NotificationViewModel = koinInject()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val activity = rememberActivity()
 
     Column(
         modifier = Modifier
@@ -51,7 +53,7 @@ fun HomePageContent(
             UserHeader(
                 userProfile = uiState.userProfile,
                 onNotificationClick = {
-                    notificationVM.onEnableNotificationsClicked()
+                    notificationVM.onEnableNotificationsClicked(activity)
                 }
             )
             VSpacer(Spacing.s6)
