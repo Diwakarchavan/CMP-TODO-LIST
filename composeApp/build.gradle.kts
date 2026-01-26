@@ -2,19 +2,35 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.androidx.room)
     alias(libs.plugins.serialization)
+    alias(libs.plugins.androidMultiplatformLibrary)
 }
 
 kotlin {
-    androidTarget {
+    androidLibrary {
+        namespace = "io.jadu.composeProject"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
+
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
+        androidResources {
+            enable = true
+        }
+        withHostTest {
+            isIncludeAndroidResources = true
+        }
+        packaging {
+            resources {
+                excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            }
+        }
+
     }
     
     listOf(
@@ -36,12 +52,12 @@ kotlin {
         }
 
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
+            implementation("org.jetbrains.compose.runtime:runtime:1.10.0")
+            implementation("org.jetbrains.compose.foundation:foundation:1.10.0")
+            implementation("org.jetbrains.compose.material3:material3:1.9.0")
+            implementation("org.jetbrains.compose.ui:ui:1.10.0")
+            implementation("org.jetbrains.compose.components:components-resources:1.10.0")
+            implementation("org.jetbrains.compose.ui:ui-tooling-preview:1.10.0")
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.material.icons.extended)
@@ -68,51 +84,13 @@ kotlin {
     }
 }
 
-android {
-    namespace = "io.jadu"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-
-    defaultConfig {
-        applicationId = "io.jadu"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 2
-        versionName = "1.1"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
-    buildTypes {
-        release {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-}
-
 room {
     schemaDirectory("$projectDir/schemas")
 }
 
 dependencies {
-    debugImplementation(compose.uiTooling)
+    //debugImplementation(compose.uiTooling)
+    androidRuntimeClasspath(libs.compose.uiTooling)
     add("kspAndroid", libs.androidx.room.compiler)
     add("kspIosSimulatorArm64", libs.androidx.room.compiler)
    // add("kspIosX64", libs.androidx.room.compiler)

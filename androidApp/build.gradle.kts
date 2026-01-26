@@ -1,0 +1,59 @@
+plugins {
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.composeCompiler)
+}
+
+android {
+    namespace = "io.jadu"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
+
+    defaultConfig {
+        applicationId = "io.jadu"
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        versionCode = 2
+        versionName = "1.1"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+        }
+    }
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+    implementation(projects.composeApp)
+    implementation("androidx.compose.material3:material3:1.4.0")
+    implementation(compose.preview)
+    implementation(libs.androidx.activity.compose)
+    // implementation(libs.androidx.room.sqlite.wrapper)
+    implementation("io.insert-koin:koin-android:3.2.0")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.testExt.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+}
