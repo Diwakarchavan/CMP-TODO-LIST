@@ -51,6 +51,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -76,7 +77,6 @@ import io.jadu.todoApp.ui.uiutils.VSpacer
 import io.jadu.todoApp.ui.utils.UiEvent
 import io.jadu.todoApp.ui.viewModel.SettingsViewModel
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import todo_list.composeapp.generated.resources.Res
 import todo_list.composeapp.generated.resources.user_octagon
@@ -109,9 +109,11 @@ fun SettingsPage(
 
     LaunchedEffect(Unit) {
         viewModel.uiEvents.collect { event ->
-            when(event) {
+            when (event) {
                 is UiEvent.OnSuccess -> showSnackBar(event.message)
                 is UiEvent.ShowError -> showSnackBar(event.message, positiveMessage = false)
+                is UiEvent.OnIdle -> {}
+                is UiEvent.OnLoading -> {}
             }
         }
     }

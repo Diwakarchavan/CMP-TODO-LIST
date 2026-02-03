@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.jadu.todoApp.data.model.InProgressTask
 import io.jadu.todoApp.data.model.TaskCategory
@@ -24,7 +25,6 @@ import io.jadu.todoApp.ui.theme.BodySmall
 import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.uiutils.VSpacer
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview

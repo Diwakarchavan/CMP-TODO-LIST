@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import io.jadu.todoApp.ui.components.CurvedButton
 import io.jadu.todoApp.ui.components.DatePickerDialog
@@ -41,7 +42,6 @@ import io.jadu.todoApp.ui.utils.UiEvent
 import io.jadu.todoApp.ui.viewModel.AddProjectViewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import todo_list.composeapp.generated.resources.Res
 import todo_list.composeapp.generated.resources.calendar
@@ -75,6 +75,10 @@ fun AddProject(
                     viewModel.resetState()
                     navController.navigateUp()
                 }
+                is UiEvent.OnLoading -> {
+                    //showing loading
+                }
+                is UiEvent.OnIdle -> {}
             }
         }
     }
