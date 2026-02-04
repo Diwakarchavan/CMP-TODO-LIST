@@ -37,7 +37,7 @@ sealed class AddProjectEvent{
     data class OnCategoryChanged(val category: TaskGroupCategory) : AddProjectEvent()
     data class OnPriorityChanged(val priority: TaskPriority) : AddProjectEvent()
     object OnSaveProject : AddProjectEvent()
-    object OnUiReset: AddProjectEvent()
+    object OnUiReset : AddProjectEvent()
 
 }
 class AddProjectViewModel(
