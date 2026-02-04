@@ -31,7 +31,7 @@ data class AddProjectUiState(
 
 sealed class AddProjectEvent{
     data class OnTitleChanged(val title: String) : AddProjectEvent()
-    data class OnDescriptionChanged(val description:String): AddProjectEvent()
+    data class OnDescriptionChanged(val description: String): AddProjectEvent()
     data class OnStartDateChanged(val startDate: String) : AddProjectEvent()
     data class OnEndDateChanged(val endDate: String) : AddProjectEvent()
     data class OnCategoryChanged(val category: TaskGroupCategory) : AddProjectEvent()
