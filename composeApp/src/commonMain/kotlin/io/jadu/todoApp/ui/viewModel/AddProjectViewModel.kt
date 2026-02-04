@@ -35,7 +35,6 @@ sealed class AddProjectEvent{
     data class OnStartDateChanged(val startDate: String) : AddProjectEvent()
     data class OnEndDateChanged(val endDate: String) : AddProjectEvent()
     data class OnCategoryChanged(val category: TaskGroupCategory) : AddProjectEvent()
-    data class OnPriorityChanged(val priority: TaskPriority) : AddProjectEvent()
     object OnSaveProject : AddProjectEvent()
     object OnUiReset : AddProjectEvent()
 
@@ -54,7 +53,7 @@ class AddProjectViewModel(
 
 
     fun onEvent(event: AddProjectEvent) {
-        when(event){
+        when (event) {
             is AddProjectEvent.OnSaveProject -> {
                 saveProject()
             }
@@ -66,9 +65,6 @@ class AddProjectViewModel(
             }
             is AddProjectEvent.OnEndDateChanged -> {
                 updateEndDate(event.endDate)
-            }
-            is AddProjectEvent.OnPriorityChanged -> {
-
             }
             is AddProjectEvent.OnStartDateChanged -> {
                 updateStartDate(event.startDate)

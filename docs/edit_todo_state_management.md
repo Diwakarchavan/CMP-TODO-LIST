@@ -2,7 +2,7 @@
 
 This ViewModel has been refactored to use an **event-based state management approach** to make state updates predictable and easier to maintain.
 
-The UI layer (Composable) remains unchanged and continues to observe `uiState`.
+The UI layer (Composable) has been updated to dispatch user interactions through the new event-based `onEvent` API while continuing to observe `uiState` for rendering.
 
 ---
 
@@ -24,7 +24,7 @@ sealed class EditTodoEvent {
     data class OnStartDateChanged(val date: String) : EditTodoEvent()
     data class OnEndDateChanged(val date: String) : EditTodoEvent()
     data class OnCategoryChanged(val category: TaskGroupCategory) : EditTodoEvent()
-    data class LoadTodo(val todoId:Long): EditTodoEvent()
+    data class LoadTodo(val todoId: Long): EditTodoEvent()
     data class OnStatusChanged(val status: TaskStatus) : EditTodoEvent()
     data class OnPriorityChanged(val priority: TaskPriority) : EditTodoEvent()
     object OnUiReset: EditTodoEvent()
@@ -37,23 +37,22 @@ sealed class EditTodoEvent {
 ```kotlin
 sealed class AddProjectEvent{
     data class OnTitleChanged(val title: String) : AddProjectEvent()
-    data class OnDescriptionChanged(val description:String): AddProjectEvent()
+    data class OnDescriptionChanged(val description: String): AddProjectEvent()
     data class OnStartDateChanged(val startDate: String) : AddProjectEvent()
     data class OnEndDateChanged(val endDate: String) : AddProjectEvent()
     data class OnCategoryChanged(val category: TaskGroupCategory) : AddProjectEvent()
-    data class OnPriorityChanged(val priority: TaskPriority) : AddProjectEvent()
     object OnSaveProject : AddProjectEvent()
-    object OnUiReset: AddProjectEvent()
+    object OnUiReset : AddProjectEvent()
 
 }
 ```
 **Screen Level State Handling:**
 ```kotlin
-sealed class EditTodoState {
-    object Idle : EditTodoState()
-    object Loading : EditTodoState()
-    data class Success(val data: EditTodoUiState) : EditTodoState()
-    data class Error(val message: String) : EditTodoState()
+sealed class UiEvent {
+    data class ShowError(val message: String) : UiEvent()
+    data class OnSuccess(val message: String) : UiEvent()
+    data class OnLoading(val message: String) : UiEvent()
+    object OnIdle : UiEvent()
 }
 ```
 
