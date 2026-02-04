@@ -59,7 +59,7 @@ class EditTodoViewModel(
     val uiEvents = _uiEvents.receiveAsFlow()
 
     fun onEvent(event: EditTodoEvent) {
-        when(event){
+        when (event) {
             is EditTodoEvent.LoadTodo -> {
                 loadTodo(event.todoId)
             }
