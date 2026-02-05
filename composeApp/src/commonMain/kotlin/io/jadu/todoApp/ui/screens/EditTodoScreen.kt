@@ -88,7 +88,7 @@ fun EditTodoScreen(
                 is UiEvent.OnLoading -> {
                     showSnackBar(
                         message = event.message,
-                        positiveMessage = false
+                        positiveMessage = true
                     )
                 }
             }
