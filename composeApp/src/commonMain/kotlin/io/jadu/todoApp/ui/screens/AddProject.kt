@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import io.jadu.todoApp.ui.components.CurvedButton
 import io.jadu.todoApp.ui.components.DatePickerDialog
@@ -38,10 +39,10 @@ import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.uiutils.VSpacer
 import io.jadu.todoApp.ui.utils.UiEvent
+import io.jadu.todoApp.ui.viewModel.AddProjectUiEvent
 import io.jadu.todoApp.ui.viewModel.AddProjectViewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import todo_list.composeapp.generated.resources.Res
 import todo_list.composeapp.generated.resources.calendar
@@ -72,9 +73,13 @@ fun AddProject(
                         message = event.message,
                         positiveMessage = true
                     )
-                    viewModel.resetState()
+                    viewModel.onEvent(AddProjectUiEvent.OnUiReset)
                     navController.navigateUp()
                 }
+                is UiEvent.OnLoading -> {
+                    //showing loading
+                }
+                is UiEvent.OnIdle -> {}
             }
         }
     }
@@ -138,7 +143,7 @@ fun AddProject(
                     placeHolderText = "Uber Designing",
                     textStyle = BodyXLarge(),
                     onTextChange = {
-                        viewModel.updateTitle(it)
+                        viewModel.onEvent(AddProjectUiEvent.OnTitleChanged(it))
                     }
                 )
 
@@ -148,7 +153,7 @@ fun AddProject(
                     title = "Description",
                     placeHolderText = "Add Project description here",
                     onTextChange = { alphabet ->
-                        viewModel.updateDescription(alphabet)
+                        viewModel.onEvent(AddProjectUiEvent.OnDescriptionChanged(alphabet))
                     }
                 )
 
@@ -202,7 +207,7 @@ fun AddProject(
                     isEnabled = !uiState.isLoading,
                     text = if (uiState.isLoading) "Saving..." else "Add Project"
                 ) {
-                    viewModel.saveProject()
+                    viewModel.onEvent(AddProjectUiEvent.OnSaveProjectUi)
                 }
             }
         }
@@ -213,7 +218,7 @@ fun AddProject(
                     openTaskGroupSelection = false
                 },
                 onCategorySelected = { category ->
-                    viewModel.updateGroupCategory(category)
+                    viewModel.onEvent(AddProjectUiEvent.OnCategoryChanged(category))
                     openTaskGroupSelection = false
                 }
             )
@@ -221,7 +226,7 @@ fun AddProject(
         if (openStartDatePicker)
             DatePickerDialog(
                 onDateSelected = { dateString ->
-                    viewModel.updateStartDate(dateString)
+                    viewModel.onEvent(AddProjectUiEvent.OnStartDateChanged(dateString))
                 },
                 onDismiss = {
                     openStartDatePicker = false
@@ -231,7 +236,7 @@ fun AddProject(
         if (openEndDatePicker)
             DatePickerDialog(
                 onDateSelected = { dateString ->
-                    viewModel.updateEndDate(dateString)
+                    viewModel.onEvent(AddProjectUiEvent.OnEndDateChanged(dateString))
                 },
                 onDismiss = {
                     openEndDatePicker = false

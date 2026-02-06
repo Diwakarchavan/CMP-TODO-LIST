@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import coil3.compose.AsyncImage
 import io.jadu.todoApp.data.model.UserProfile
 import io.jadu.todoApp.ui.components.bounceClickable
@@ -29,7 +30,6 @@ import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.uiutils.HSpacer
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import todo_list.composeapp.generated.resources.Res
 import todo_list.composeapp.generated.resources.notification
 import todo_list.composeapp.generated.resources.user_octagon

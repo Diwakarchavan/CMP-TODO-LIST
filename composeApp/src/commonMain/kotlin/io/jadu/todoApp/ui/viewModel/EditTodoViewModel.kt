@@ -32,18 +32,67 @@ data class EditTodoUiState(
     val isDeleted: Boolean = false
 )
 
+sealed class EditTodoEvent {
+    data class OnTitleChanged(val title: String) : EditTodoEvent()
+    data class OnDescriptionChanged(val description: String) : EditTodoEvent()
+    data class OnStartDateChanged(val date: String) : EditTodoEvent()
+    data class OnEndDateChanged(val date: String) : EditTodoEvent()
+    data class OnCategoryChanged(val category: TaskGroupCategory) : EditTodoEvent()
+    data class LoadTodo(val todoId: Long) : EditTodoEvent()
+    data class OnStatusChanged(val status: TaskStatus) : EditTodoEvent()
+    data class OnPriorityChanged(val priority: TaskPriority) : EditTodoEvent()
+    object OnUiReset : EditTodoEvent()
+    object OnSaveTodo : EditTodoEvent()
+    object OnDeleteTodo : EditTodoEvent()
+}
+
+
 class EditTodoViewModel(
     private val todoDao: TodoDao
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(EditTodoUiState())
     val uiState: StateFlow<EditTodoUiState> = _uiState.asStateFlow()
-
     private val _uiEvents = Channel<UiEvent>()
     // Expose as a Flow
     val uiEvents = _uiEvents.receiveAsFlow()
-
-    fun loadTodo(todoId: Long) {
+    fun onEvent(event: EditTodoEvent) {
+        when (event) {
+            is EditTodoEvent.LoadTodo -> {
+                loadTodo(event.todoId)
+            }
+            is EditTodoEvent.OnSaveTodo -> {
+                saveTodo()
+            }
+            is EditTodoEvent.OnDeleteTodo -> {
+                deleteTodo()
+            }
+            is EditTodoEvent.OnDescriptionChanged -> {
+                updateDescription(event.description)
+            }
+            is EditTodoEvent.OnTitleChanged -> {
+                updateTitle(event.title)
+            }
+            is EditTodoEvent.OnCategoryChanged -> {
+                updateGroupCategory(event.category)
+            }
+            is EditTodoEvent.OnPriorityChanged -> {
+                updatePriority(event.priority)
+            }
+            is EditTodoEvent.OnStatusChanged -> {
+                updateStatus(event.status)
+            }
+            is EditTodoEvent.OnStartDateChanged -> {
+                updateStartDate(event.date)
+            }
+            is EditTodoEvent.OnEndDateChanged -> {
+                updateEndDate(event.date)
+            }
+            is EditTodoEvent.OnUiReset -> {
+                resetState()
+            }
+        }
+    }
+    private fun loadTodo(todoId: Long) {
         viewModelScope.launch {
             try {
                 val todo = todoDao.getById(todoId)
@@ -68,35 +117,27 @@ class EditTodoViewModel(
             }
         }
     }
-
-    fun updateTitle(title: String) {
+    private fun updateTitle(title: String) {
         _uiState.update { it.copy(title = title) }
     }
-
-    fun updateDescription(description: String) {
+    private fun updateDescription(description: String) {
         _uiState.update { it.copy(description = description) }
     }
-
-    fun updateGroupCategory(category: TaskGroupCategory) {
+    private fun updateGroupCategory(category: TaskGroupCategory) {
         _uiState.update { it.copy(selectedGroupCategory = category) }
     }
-
-    fun updateStatus(status: TaskStatus) {
+    private fun updateStatus(status: TaskStatus) {
         _uiState.update { it.copy(selectedStatus = status) }
     }
-
-    fun updateStartDate(date: String) {
+    private fun updateStartDate(date: String) {
         _uiState.update { it.copy(startDate = date) }
     }
-
-    fun updateEndDate(date: String) {
+    private fun updateEndDate(date: String) {
         _uiState.update { it.copy(endDate = date) }
     }
-
-    fun updatePriority(priority: TaskPriority) {
+    private fun updatePriority(priority: TaskPriority) {
         _uiState.update { it.copy(priority = priority) }
     }
-
     private fun mapGroupCategoryToTaskCategory(groupCategory: TaskGroupCategory): TaskCategory {
         return when (groupCategory) {
             TaskGroupCategory.OfficeProject -> TaskCategory.Office
@@ -105,9 +146,8 @@ class EditTodoViewModel(
             TaskGroupCategory.Other -> TaskCategory.Other
         }
     }
-
     @OptIn(ExperimentalTime::class)
-    fun saveTodo() {
+    private fun saveTodo() {
         val state = _uiState.value
 
         if (state.title.isBlank()) {
@@ -146,8 +186,7 @@ class EditTodoViewModel(
             }
         }
     }
-
-    fun deleteTodo() {
+    private fun deleteTodo() {
         _uiState.update { it.copy(isLoading = true) }
 
         viewModelScope.launch {
@@ -165,9 +204,7 @@ class EditTodoViewModel(
             }
         }
     }
-
-    fun resetState() {
+    private fun resetState() {
         _uiState.update { EditTodoUiState() }
     }
 }
-

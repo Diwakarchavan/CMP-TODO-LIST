@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import io.jadu.todoApp.data.model.TaskStatus
 import io.jadu.todoApp.ui.components.CurvedButton
@@ -40,10 +41,10 @@ import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.uiutils.VSpacer
 import io.jadu.todoApp.ui.utils.UiEvent
+import io.jadu.todoApp.ui.viewModel.EditTodoEvent
 import io.jadu.todoApp.ui.viewModel.EditTodoViewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import todo_list.composeapp.generated.resources.Res
 import todo_list.composeapp.generated.resources.calendar
@@ -65,7 +66,7 @@ fun EditTodoScreen(
     var shouldDeleteTodo by remember { mutableStateOf(false) }
 
     LaunchedEffect(todoId) {
-        viewModel.loadTodo(todoId)
+        viewModel.onEvent(EditTodoEvent.LoadTodo(todoId))
     }
 
     LaunchedEffect(Unit) {
@@ -83,6 +84,10 @@ fun EditTodoScreen(
                         positiveMessage = false
                     )
                 }
+                is UiEvent.OnIdle -> {}
+                is UiEvent.OnLoading -> {
+                    //show a loading screen
+                }
             }
         }
     }
@@ -90,7 +95,7 @@ fun EditTodoScreen(
     // Navigate back when saved or deleted successfully
     LaunchedEffect(uiState.isSaved, uiState.isDeleted) {
         if (uiState.isSaved || uiState.isDeleted) {
-            viewModel.resetState()
+            viewModel.onEvent(EditTodoEvent.OnUiReset)
             navController.navigateUp()
         }
     }
@@ -194,7 +199,7 @@ fun EditTodoScreen(
                     placeHolderText = "Task Name",
                     textStyle = BodyXLarge(),
                     onTextChange = {
-                        viewModel.updateTitle(it)
+                        viewModel.onEvent(EditTodoEvent.OnTitleChanged(it))
                     }
                 )
 
@@ -204,7 +209,7 @@ fun EditTodoScreen(
                     title = "Description",
                     placeHolderText = "Add task description here",
                     onTextChange = { alphabet ->
-                        viewModel.updateDescription(alphabet)
+                        viewModel.onEvent(EditTodoEvent.OnDescriptionChanged(alphabet))
                     }
                 )
 
@@ -258,7 +263,7 @@ fun EditTodoScreen(
                     isEnabled = !uiState.isLoading,
                     text = if (uiState.isLoading) "Saving..." else "Save Changes"
                 ) {
-                    viewModel.saveTodo()
+                    viewModel.onEvent(EditTodoEvent.OnSaveTodo)
                 }
             }
         }
@@ -269,7 +274,7 @@ fun EditTodoScreen(
                     openTaskGroupSelection = false
                 },
                 onCategorySelected = { category ->
-                    viewModel.updateGroupCategory(category)
+                    viewModel.onEvent(EditTodoEvent.OnCategoryChanged(category))
                     openTaskGroupSelection = false
                 }
             )
@@ -281,7 +286,7 @@ fun EditTodoScreen(
                     openTaskStatusSelection = false
                 },
                 onStatusSelected = { status ->
-                    viewModel.updateStatus(status)
+                    viewModel.onEvent(EditTodoEvent.OnStatusChanged(status))
                     openTaskStatusSelection = false
                 }
             )
@@ -289,7 +294,7 @@ fun EditTodoScreen(
         if (openStartDatePicker)
             DatePickerDialog(
                 onDateSelected = { dateString ->
-                    viewModel.updateStartDate(dateString)
+                    viewModel.onEvent(EditTodoEvent.OnStartDateChanged(dateString))
                 },
                 onDismiss = {
                     openStartDatePicker = false
@@ -299,7 +304,7 @@ fun EditTodoScreen(
         if (openEndDatePicker)
             DatePickerDialog(
                 onDateSelected = { dateString ->
-                    viewModel.updateEndDate(dateString)
+                    viewModel.onEvent(EditTodoEvent.OnEndDateChanged(dateString))
                 },
                 onDismiss = {
                     openEndDatePicker = false
@@ -312,7 +317,7 @@ fun EditTodoScreen(
                 shouldDeleteTodo = false
             },
             onConfirm = {
-                viewModel.deleteTodo()
+                viewModel.onEvent(EditTodoEvent.OnDeleteTodo)
             }
         )
     }

@@ -1,7 +1,6 @@
 package io.jadu.todoApp.ui.components
 
-import org.jetbrains.compose.ui.tooling.preview.Preview
-
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -354,4 +353,3 @@ private fun defaultLabels(): List<SphereLabel> {
         SphereLabel("Travel", Res.drawable.close_up_of_pink_coffee_cup)
     )
 }
-

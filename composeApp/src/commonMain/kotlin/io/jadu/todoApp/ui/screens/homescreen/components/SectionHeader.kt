@@ -12,12 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import io.jadu.todoApp.ui.theme.BodySmall
 import io.jadu.todoApp.ui.theme.BodyXXLarge
 import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.uiutils.HSpacer
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview(showBackground = true)

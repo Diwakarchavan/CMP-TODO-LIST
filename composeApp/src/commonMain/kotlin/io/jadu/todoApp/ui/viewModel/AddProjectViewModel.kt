@@ -28,6 +28,17 @@ data class AddProjectUiState(
     val priority: TaskPriority = TaskPriority.MEDIUM,
     val isLoading: Boolean = false,
 )
+
+sealed class AddProjectUiEvent{
+    data class OnTitleChanged(val title: String) : AddProjectUiEvent()
+    data class OnDescriptionChanged(val description: String): AddProjectUiEvent()
+    data class OnStartDateChanged(val startDate: String) : AddProjectUiEvent()
+    data class OnEndDateChanged(val endDate: String) : AddProjectUiEvent()
+    data class OnCategoryChanged(val category: TaskGroupCategory) : AddProjectUiEvent()
+    object OnSaveProjectUi : AddProjectUiEvent()
+    object OnUiReset : AddProjectUiEvent()
+
+}
 class AddProjectViewModel(
     private val todoDao: TodoDao
 ) : ViewModel() {
@@ -40,23 +51,50 @@ class AddProjectViewModel(
     // Expose as a Flow
     val uiEvents = _uiEvents.receiveAsFlow()
 
-    fun updateTitle(title: String) {
+
+    fun onEvent(event: AddProjectUiEvent) {
+        when (event) {
+            is AddProjectUiEvent.OnSaveProjectUi -> {
+                saveProject()
+            }
+            is AddProjectUiEvent.OnCategoryChanged -> {
+                updateGroupCategory(event.category)
+            }
+            is AddProjectUiEvent.OnDescriptionChanged -> {
+                updateDescription(event.description)
+            }
+            is AddProjectUiEvent.OnEndDateChanged -> {
+                updateEndDate(event.endDate)
+            }
+            is AddProjectUiEvent.OnStartDateChanged -> {
+                updateStartDate(event.startDate)
+            }
+            is AddProjectUiEvent.OnTitleChanged -> {
+                updateTitle(event.title)
+            }
+            is AddProjectUiEvent.OnUiReset -> {
+                resetState()
+            }
+        }
+    }
+
+    private fun updateTitle(title: String) {
         _uiState.update { it.copy(title = title) }
     }
 
-    fun updateDescription(description: String) {
+    private fun updateDescription(description: String) {
         _uiState.update { it.copy(description = description) }
     }
 
-    fun updateGroupCategory(category: TaskGroupCategory) {
+    private fun updateGroupCategory(category: TaskGroupCategory) {
         _uiState.update { it.copy(selectedGroupCategory = category) }
     }
 
-    fun updateStartDate(date: String) {
+    private fun updateStartDate(date: String) {
         _uiState.update { it.copy(startDate = date) }
     }
 
-    fun updateEndDate(date: String) {
+    private fun updateEndDate(date: String) {
         _uiState.update { it.copy(endDate = date) }
     }
 
@@ -70,7 +108,7 @@ class AddProjectViewModel(
     }
 
     @OptIn(ExperimentalTime::class)
-    fun saveProject() {
+    private fun saveProject() {
         val state = _uiState.value
 
         //validate State
@@ -122,7 +160,7 @@ class AddProjectViewModel(
         }
     }
 
-    fun resetState() {
+    private fun resetState() {
         _uiState.value = AddProjectUiState()
     }
 }
