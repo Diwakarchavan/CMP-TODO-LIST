@@ -29,14 +29,14 @@ data class AddProjectUiState(
     val isLoading: Boolean = false,
 )
 
-sealed class AddProjectEvent{
-    data class OnTitleChanged(val title: String) : AddProjectEvent()
-    data class OnDescriptionChanged(val description: String): AddProjectEvent()
-    data class OnStartDateChanged(val startDate: String) : AddProjectEvent()
-    data class OnEndDateChanged(val endDate: String) : AddProjectEvent()
-    data class OnCategoryChanged(val category: TaskGroupCategory) : AddProjectEvent()
-    object OnSaveProject : AddProjectEvent()
-    object OnUiReset : AddProjectEvent()
+sealed class AddProjectUiEvent{
+    data class OnTitleChanged(val title: String) : AddProjectUiEvent()
+    data class OnDescriptionChanged(val description: String): AddProjectUiEvent()
+    data class OnStartDateChanged(val startDate: String) : AddProjectUiEvent()
+    data class OnEndDateChanged(val endDate: String) : AddProjectUiEvent()
+    data class OnCategoryChanged(val category: TaskGroupCategory) : AddProjectUiEvent()
+    object OnSaveProjectUi : AddProjectUiEvent()
+    object OnUiReset : AddProjectUiEvent()
 
 }
 class AddProjectViewModel(
@@ -52,27 +52,27 @@ class AddProjectViewModel(
     val uiEvents = _uiEvents.receiveAsFlow()
 
 
-    fun onEvent(event: AddProjectEvent) {
+    fun onEvent(event: AddProjectUiEvent) {
         when (event) {
-            is AddProjectEvent.OnSaveProject -> {
+            is AddProjectUiEvent.OnSaveProjectUi -> {
                 saveProject()
             }
-            is AddProjectEvent.OnCategoryChanged -> {
+            is AddProjectUiEvent.OnCategoryChanged -> {
                 updateGroupCategory(event.category)
             }
-            is AddProjectEvent.OnDescriptionChanged -> {
+            is AddProjectUiEvent.OnDescriptionChanged -> {
                 updateDescription(event.description)
             }
-            is AddProjectEvent.OnEndDateChanged -> {
+            is AddProjectUiEvent.OnEndDateChanged -> {
                 updateEndDate(event.endDate)
             }
-            is AddProjectEvent.OnStartDateChanged -> {
+            is AddProjectUiEvent.OnStartDateChanged -> {
                 updateStartDate(event.startDate)
             }
-            is AddProjectEvent.OnTitleChanged -> {
+            is AddProjectUiEvent.OnTitleChanged -> {
                 updateTitle(event.title)
             }
-            is AddProjectEvent.OnUiReset -> {
+            is AddProjectUiEvent.OnUiReset -> {
                 resetState()
             }
         }
