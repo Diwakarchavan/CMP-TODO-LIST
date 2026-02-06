@@ -24,7 +24,7 @@ sealed class EditTodoEvent {
     data class OnStartDateChanged(val date: String) : EditTodoEvent()
     data class OnEndDateChanged(val date: String) : EditTodoEvent()
     data class OnCategoryChanged(val category: TaskGroupCategory) : EditTodoEvent()
-    data class LoadTodo(val todoId: Long): EditTodoEvent()
+    data class LoadTodo(val todoId: Long) : EditTodoEvent()
     data class OnStatusChanged(val status: TaskStatus) : EditTodoEvent()
     data class OnPriorityChanged(val priority: TaskPriority) : EditTodoEvent()
     object OnUiReset : EditTodoEvent()
