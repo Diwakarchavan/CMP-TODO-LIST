@@ -21,6 +21,13 @@ import io.jadu.todoApp.ui.theme.BodyLarge
 import io.jadu.todoApp.ui.theme.BodyNormal
 import io.jadu.todoApp.ui.theme.H2TextStyle
 import io.jadu.todoApp.ui.theme.Spacing
+import org.jetbrains.compose.resources.stringResource
+import todo_list.composeapp.generated.resources.Res
+import todo_list.composeapp.generated.resources.about_app
+import todo_list.composeapp.generated.resources.about_cmp
+import todo_list.composeapp.generated.resources.about_desc
+import todo_list.composeapp.generated.resources.about_title
+
 
 @Composable
 fun AboutUsPage(
@@ -30,7 +37,7 @@ fun AboutUsPage(
         topBar = {
             TodoTopAppBar(
                 modifier = Modifier.systemBarsPadding(),
-                title = "About Us",
+                title = stringResource(Res.string.about_title),
                 navController = navHostController
             )
         }
@@ -45,7 +52,7 @@ fun AboutUsPage(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Todo App",
+                    text = stringResource(Res.string.about_app),
                     style = H2TextStyle().copy(
                         fontWeight = FontWeight.Bold
                     ),
@@ -55,7 +62,7 @@ fun AboutUsPage(
                 Spacer(modifier = Modifier.height(Spacing.s3))
 
                 Text(
-                    text = "Version 1.0.0",
+                    text = "Version 1.0.0", //TODO: BUILD CONFIG VERSION
                     style = BodyLarge(),
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
@@ -63,7 +70,7 @@ fun AboutUsPage(
                 Spacer(modifier = Modifier.height(Spacing.s5))
 
                 Text(
-                    text = "A simple and elegant todo app to help you manage your tasks efficiently.",
+                    text = stringResource(Res.string.about_desc),
                     style = BodyNormal(),
                     color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center
@@ -72,7 +79,7 @@ fun AboutUsPage(
                 Spacer(modifier = Modifier.height(Spacing.s4))
 
                 Text(
-                    text = "Built with Compose Multiplatform",
+                    text = stringResource(Res.string.about_cmp),
                     style = BodyNormal(),
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                     textAlign = TextAlign.Center

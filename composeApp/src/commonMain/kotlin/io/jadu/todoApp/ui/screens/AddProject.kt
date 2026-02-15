@@ -43,9 +43,19 @@ import io.jadu.todoApp.ui.viewModel.AddProjectUiEvent
 import io.jadu.todoApp.ui.viewModel.AddProjectViewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import todo_list.composeapp.generated.resources.Res
+import todo_list.composeapp.generated.resources.add_project_task_group
+import todo_list.composeapp.generated.resources.add_project_title
 import todo_list.composeapp.generated.resources.calendar
+import todo_list.composeapp.generated.resources.project_desc_plac
+import todo_list.composeapp.generated.resources.project_description
+import todo_list.composeapp.generated.resources.project_end_date
+import todo_list.composeapp.generated.resources.project_name_plac
+import todo_list.composeapp.generated.resources.project_sel_date
+import todo_list.composeapp.generated.resources.project_st_date
+import todo_list.composeapp.generated.resources.saving
 
 @Composable
 @Preview
@@ -94,7 +104,7 @@ fun AddProject(
         ) {
             // Top Appbar
             TodoTopAppBar(
-                title = "Add Project",
+                title = stringResource(Res.string.add_project_title),
                 modifier = Modifier.systemBarsPadding(),
                 navController = navController
             )
@@ -109,7 +119,7 @@ fun AddProject(
                 // Add TaskGroup
                 SelectionCard(
                     cardConfig = SelectionCardConfig(
-                        title = "Task Group",
+                        title = stringResource(Res.string.add_project_task_group),
                         subtitle = uiState.selectedGroupCategory.displayName,
                         leadingIcon = {
                             Box(
@@ -140,7 +150,7 @@ fun AddProject(
                 // Add Project Name
                 EditDetailCard(
                     value = uiState.title,
-                    placeHolderText = "Uber Designing",
+                    placeHolderText = stringResource(Res.string.project_name_plac),
                     textStyle = BodyXLarge(),
                     onTextChange = {
                         viewModel.onEvent(AddProjectUiEvent.OnTitleChanged(it))
@@ -150,8 +160,8 @@ fun AddProject(
                 // Add description
                 EditDetailCard(
                     value = uiState.description,
-                    title = "Description",
-                    placeHolderText = "Add Project description here",
+                    title = stringResource(Res.string.project_description),
+                    placeHolderText = stringResource(Res.string.project_desc_plac),
                     onTextChange = { alphabet ->
                         viewModel.onEvent(AddProjectUiEvent.OnDescriptionChanged(alphabet))
                     }
@@ -160,8 +170,8 @@ fun AddProject(
                 // Start date
                 SelectionCard(
                     cardConfig = SelectionCardConfig(
-                        title = "Start Date",
-                        subtitle = uiState.startDate ?: "Select Date",
+                        title = stringResource(Res.string.project_st_date),
+                        subtitle = uiState.startDate ?: stringResource(Res.string.project_sel_date),
                         leadingIcon = {
                             Image(
                                 painter = painterResource(Res.drawable.calendar),
@@ -181,8 +191,8 @@ fun AddProject(
                 // End date
                 SelectionCard(
                     cardConfig = SelectionCardConfig(
-                        title = "End Date",
-                        subtitle = uiState.endDate ?: "Select Date",
+                        title = stringResource(Res.string.project_end_date),
+                        subtitle = uiState.endDate ?: stringResource(Res.string.project_sel_date),
                         leadingIcon = {
                             Image(
                                 painter = painterResource(Res.drawable.calendar),
@@ -205,7 +215,7 @@ fun AddProject(
                 CurvedButton(
                     modifier = Modifier,
                     isEnabled = !uiState.isLoading,
-                    text = if (uiState.isLoading) "Saving..." else "Add Project"
+                    text = if (uiState.isLoading) stringResource(Res.string.saving) else stringResource(Res.string.add_project_title)
                 ) {
                     viewModel.onEvent(AddProjectUiEvent.OnSaveProjectUi)
                 }

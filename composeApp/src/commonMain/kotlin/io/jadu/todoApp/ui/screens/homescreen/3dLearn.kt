@@ -25,6 +25,7 @@ import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.viewModel.MostUsedCategoryViewModel
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import todo_list.composeapp.generated.resources.Res
 import todo_list.composeapp.generated.resources.blue_desk_calendar
@@ -32,6 +33,7 @@ import todo_list.composeapp.generated.resources.blue_stopwatch_with_pink_arrow
 import todo_list.composeapp.generated.resources.close_up_of_pink_coffee_cup
 import todo_list.composeapp.generated.resources.multicolored_smartphone_notifications
 import todo_list.composeapp.generated.resources.pie_chart
+import todo_list.composeapp.generated.resources.top_categ
 import kotlin.random.Random
 
 
@@ -47,7 +49,7 @@ fun MostUsedCategoryScreen(
         topBar = {
             TodoTopAppBar(
                 modifier = Modifier.systemBarsPadding(),
-                title = "Most Used Categories",
+                title = stringResource(Res.string.top_categ),
                 navController = navHostController
             )
         }

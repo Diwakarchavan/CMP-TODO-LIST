@@ -40,12 +40,16 @@ import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.viewModel.OnBoardingViewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import todo_list.composeapp.generated.resources.Res
 import todo_list.composeapp.generated.resources.blue_desk_calendar
 import todo_list.composeapp.generated.resources.blue_stopwatch_with_pink_arrow
 import todo_list.composeapp.generated.resources.female_sitting_on_the_floor_with_cup_in_hand_and_laptop_on_leg
 import todo_list.composeapp.generated.resources.multicolored_smartphone_notifications
+import todo_list.composeapp.generated.resources.onboarding_button
+import todo_list.composeapp.generated.resources.onboarding_text
+import todo_list.composeapp.generated.resources.onboarding_title
 import todo_list.composeapp.generated.resources.pie_chart
 import todo_list.composeapp.generated.resources.vase_with_tulips__glasses_and_pencil
 
@@ -89,7 +93,7 @@ fun OnboardingScreen(
                 modifier = Modifier.padding(bottom = 40.dp)
             ) {
                 Text(
-                    text = "Task Management &\nTo-Do List",
+                    text = stringResource(Res.string.onboarding_title),
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
@@ -99,7 +103,7 @@ fun OnboardingScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "This productive tool is designed to help\nyou better manage your task\nproject-wisely conveniently!",
+                    text = stringResource(Res.string.onboarding_text),
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Normal,
                     color = Color(0xFF6B6B6B),
@@ -117,7 +121,7 @@ fun OnboardingScreen(
                         }
                         onOnboardingComplete()
                     },
-                    text = "Let's Start",
+                    text = stringResource(Res.string.onboarding_button),
                     modifier = Modifier.fillMaxWidth()
                 )
             }

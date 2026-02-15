@@ -39,7 +39,14 @@ import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.uiutils.HSpacer
 import io.jadu.todoApp.ui.uiutils.VSpacer
 import io.jadu.todoApp.ui.viewModel.TaskScreenViewModel
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
+import todo_list.composeapp.generated.resources.Res
+import todo_list.composeapp.generated.resources.no_tasks
+import todo_list.composeapp.generated.resources.tasks_all
+import todo_list.composeapp.generated.resources.tasks_done
+import todo_list.composeapp.generated.resources.tasks_going
+import todo_list.composeapp.generated.resources.tasks_todo
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
@@ -52,10 +59,10 @@ fun TaskScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     val chips = listOf(
-        "All",
-        "To do",
-        "on Going",
-        "Done"
+        stringResource(Res.string.tasks_all),
+        stringResource(Res.string.tasks_todo),
+        stringResource(Res.string.tasks_going),
+        stringResource(Res.string.tasks_done)
     )
 
     TodoBackgroundScreen {
@@ -121,7 +128,7 @@ fun TaskScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "No tasks for this date",
+                                text = stringResource(Res.string.no_tasks),
                                 style = BodyLarge().copy(
                                     color = TodoColors.Secondary.color,
                                     textAlign = TextAlign.Center
