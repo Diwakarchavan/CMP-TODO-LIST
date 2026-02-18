@@ -77,8 +77,26 @@ import io.jadu.todoApp.ui.uiutils.VSpacer
 import io.jadu.todoApp.ui.utils.UiEvent
 import io.jadu.todoApp.ui.viewModel.SettingsViewModel
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import todo_list.composeapp.generated.resources.Res
+import todo_list.composeapp.generated.resources.cancel
+import todo_list.composeapp.generated.resources.settings_about
+import todo_list.composeapp.generated.resources.settings_about_desc
+import todo_list.composeapp.generated.resources.settings_add_name
+import todo_list.composeapp.generated.resources.settings_edit_name
+import todo_list.composeapp.generated.resources.settings_edit_name_photo
+import todo_list.composeapp.generated.resources.settings_feedback
+import todo_list.composeapp.generated.resources.settings_feedback_desc
+import todo_list.composeapp.generated.resources.settings_feedback_plac
+import todo_list.composeapp.generated.resources.settings_infocard_compl
+import todo_list.composeapp.generated.resources.settings_infocard_remain
+import todo_list.composeapp.generated.resources.settings_report
+import todo_list.composeapp.generated.resources.settings_report_desc
+import todo_list.composeapp.generated.resources.settings_report_plac
+import todo_list.composeapp.generated.resources.settings_save_name
+import todo_list.composeapp.generated.resources.settings_title
+import todo_list.composeapp.generated.resources.submit
 import todo_list.composeapp.generated.resources.user_octagon
 
 
@@ -145,7 +163,7 @@ fun SettingsPage(
         topBar = {
             TodoTopAppBar(
                 modifier = Modifier.systemBarsPadding(),
-                title = "Settings",
+                title = stringResource(Res.string.settings_title),
                 navController = navHostController
             )
         }
@@ -185,7 +203,7 @@ fun SettingsPage(
                         ) {
                             Icon(
                                 imageVector = if (isEditing) Icons.Default.Check else Icons.Default.Edit,
-                                contentDescription = if (isEditing) "Save Name" else "Edit Name",
+                                contentDescription = if (isEditing) stringResource(Res.string.settings_save_name) else stringResource(Res.string.settings_edit_name),
                                 tint = if (isEditing) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
                                 modifier = Modifier
                                     .size(if (isEditing) 36.dp else 24.dp)
@@ -280,7 +298,7 @@ fun SettingsPage(
                                             ),
                                             placeholder = {
                                                 Text(
-                                                    text = "Add Your Name",
+                                                    text = stringResource(Res.string.settings_add_name),
                                                     style = H1TextStyle().copy(
                                                         fontSize = 36.sp,
                                                         fontStyle = FontStyle.Italic,
@@ -299,7 +317,7 @@ fun SettingsPage(
                                     ) {
                                         if (name.isEmpty()) {
                                             Text(
-                                                text = "Edit Your Name and Photo",
+                                                text = stringResource(Res.string.settings_edit_name_photo),
                                                 style = BodyXLarge().copy(
                                                     fontWeight = FontWeight.Bold
                                                 ),
@@ -358,7 +376,7 @@ fun SettingsPage(
                                         ) {
                                             InfoCard(
                                                 title = "${uiState.completedTodos}",
-                                                subtitle = "Completed",
+                                                subtitle = stringResource(Res.string.settings_infocard_compl),
                                                 modifier = Modifier
                                             )
                                         }
@@ -384,7 +402,7 @@ fun SettingsPage(
                                         ) {
                                             InfoCard(
                                                 title = "${uiState.incompleteTodos}",
-                                                subtitle = "Remaining",
+                                                subtitle = stringResource(Res.string.settings_infocard_remain),
                                                 modifier = Modifier
                                             )
                                         }
@@ -397,27 +415,27 @@ fun SettingsPage(
 
                             // Action Buttons
                             BorderButton(
-                                "About Us",
+                                stringResource(Res.string.settings_about),
                                 onClick = {
                                     navHostController.navigate(NavRoute.AboutUs)
                                 },
-                                subtitle = "Know more about us"
+                                subtitle = stringResource(Res.string.settings_about_desc)
                             )
                             BorderButton(
-                                "FeedBack",
+                                stringResource(Res.string.settings_feedback),
                                 onClick = {
                                     showDialog = true
                                     isFeedback.value = true
                                 },
-                                subtitle = "Give us your valuable feedback"
+                                subtitle = stringResource(Res.string.settings_feedback_desc)
                             )
                             BorderButton(
-                                "Report A Bug",
+                                stringResource(Res.string.settings_report),
                                 onClick = {
                                     showDialog = true
                                     isFeedback.value = false
                                 },
-                                subtitle = "Report any bugs you find"
+                                subtitle = stringResource(Res.string.settings_report_desc)
                             )
                         }
                     }
@@ -518,7 +536,7 @@ private fun TextFieldDialogue(
         onDismissRequest = onDismissRequest,
         title = {
             Text(
-                if (isFeedbackClicked) "Feedback" else "Report a Bug",
+                if (isFeedbackClicked) stringResource(Res.string.settings_feedback) else stringResource(Res.string.settings_report),
                 style = BodyLarge()
             )
         },
@@ -526,7 +544,7 @@ private fun TextFieldDialogue(
             TodoTextField(
                 value = text,
                 onValueChange = { text = it },
-                placeholder = if (isFeedbackClicked) "Share your feedback..." else "Describe the bug...",
+                placeholder = if (isFeedbackClicked) stringResource(Res.string.settings_feedback_plac) else stringResource(Res.string.settings_report_plac),
                 modifier = Modifier.fillMaxWidth(),
                 focusedBorderColor = MaterialTheme.colorScheme.outline,
                 singleLine = false
@@ -540,7 +558,7 @@ private fun TextFieldDialogue(
                 }
             ) {
                 Text(
-                    "Submit",
+                    stringResource(Res.string.submit),
                     style = BodyNormal()
                 )
             }
@@ -548,7 +566,7 @@ private fun TextFieldDialogue(
         dismissButton = {
             TextButton(onClick = onDismissRequest) {
                 Text(
-                    "Cancel",
+                    stringResource(Res.string.cancel),
                     style = BodyNormal()
                 )
             }

@@ -1,0 +1,105 @@
+<resources>
+    <string name="app_name">TodoApp</string>
+
+    <!-- ONBOARDING SCREEN-->
+    <string name="onboarding_title">Task Management \u0026<br/>To-Do List</string>
+    <string name="onboarding_text">This productive tool is designed to help<br/>you better manage your task<br/>project-wisely conveniently!</string>
+    <string name="onboarding_button">Let\'s Start</string>
+
+    <!-- HOMESCREEN -->
+    <string name="task_card">Your Today's task <br/> almost done</string>
+    <string name="task_card_btn">View Task</string>
+    <string name="tasks">Tasks</string>
+    <string name="in_progress2">In Progress</string>
+
+    <!-- SETTINGS SCREEN-->
+    <string name="settings_title">Settings</string>
+    <string name="settings_save_name">Save Name</string>
+    <string name="settings_edit_name">Edit Name</string>
+    <string name="settings_add_name">Add Your Name</string>
+    <string name="settings_edit_name_photo">Edit Your Name and Photo</string>
+    <string name="settings_infocard_compl">Completed</string>
+    <string name="settings_infocard_remain">Remaining</string>
+    <string name="settings_about">About Us</string>
+    <string name="settings_about_desc">Know more about us</string>
+    <string name="settings_feedback">Feedback</string>
+    <string name="settings_feedback_desc">Give us your valuable feedback</string>
+    <string name="settings_feedback_plac">Share your feedback...</string>
+    <string name="settings_report">Report A Bug</string>
+    <string name="settings_report_desc">Report any bugs you find</string>
+    <string name="settings_report_plac">Describe the bug...</string>
+
+    <!-- ABOUT US SCREEN-->
+    <string name="about_title">About Us</string>
+    <string name="about_app">Todo App</string>
+    <string name="about_desc">A simple and elegant todo app to help you manage your tasks efficiently.</string>
+    <string name="about_cmp">Built with Compose Multiplatform</string>
+
+    <!-- TASK SCREEN-->
+    <string name="tasks_all">All</string>
+    <string name="tasks_todo">To do</string>
+    <string name="tasks_going">on Going</string>
+    <string name="tasks_done">Done</string>
+    <string name="no_tasks">No tasks for this date</string>
+    <string name="todays_tasks">Today's Tasks</string>
+    <string name="select_task_status">Select Task Status</string>
+    <string name="select_task_group">Select Task Group</string>
+
+
+    <!-- ADD PROJECT-->
+    <string name="add_project_title">Add Project</string>
+    <string name="add_project_task_group">Add Project</string>
+    <string name="project_name_plac">Uber Designing</string>
+    <string name="project_description">Description</string>
+    <string name="project_desc_plac">Add Project description here</string>
+    <string name="project_st_date">Start Date</string>
+    <string name="project_sel_date">Select Date</string>
+    <string name="project_end_date">End Date</string>
+    <string name="project_name">Project Name</string>
+
+
+    <!-- EDIT -->
+    <string name="edit_task">Edit Task</string>
+    <string name="task_group">Task Group</string>
+    <string name="no_task_groups">No task groups yet</string>
+    <string name="task_status">Task Status</string>
+    <string name="to_do">To Do</string>
+    <string name="in_progress">To Do</string>
+    <string name="done">Done</string>
+    <string name="task_name">Task Name</string>
+    <string name="task_desc_plac">Add task description here</string>
+    <string name="delete_todo">Delete Todo</string>
+    <string name="delete_todo2">Are you sure, to delete this Todo?</string>
+
+
+    <!-- NAVBAR -->
+    <string name="navbar_home">Home</string>
+    <string name="navbar_tasks">Tasks</string>
+    <string name="navbar_add">Add</string>
+    <string name="navbar_calendar">Calendar</string>
+    <string name="navbar_settings">Settings</string>
+
+    <!-- GENERAL -->
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="saving">Saving...</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="success">Success</string>
+    <string name="hide_pass">Hide Password</string>
+    <string name="show_pass">Show Password</string>
+    <string name="ok">OK</string>
+    <string name="arrow_right">→</string>
+    <string name="drag_to_rotate">Drag to rotate</string>
+
+
+
+    <!-- MISC -->
+    <string name="top_categ">Most Used Categories</string>
+    <string name="user_hello">Hello!</string>
+    <string name="user">User</string>
+    <string name="progress">Progress</string>
+    <string name="jetpack_compose">Working on Jetpack Compose</string>
+
+
+
+</resources>

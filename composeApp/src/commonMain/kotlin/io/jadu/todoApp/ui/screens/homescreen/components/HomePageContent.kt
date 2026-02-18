@@ -30,7 +30,12 @@ import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.uiutils.HSpacer
 import io.jadu.todoApp.ui.uiutils.VSpacer
 import io.jadu.todoApp.ui.viewModel.HomeScreenViewModel
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
+import todo_list.composeapp.generated.resources.Res
+import todo_list.composeapp.generated.resources.in_progress2
+import todo_list.composeapp.generated.resources.task_group
+import todo_list.composeapp.generated.resources.no_task_groups
 
 @Composable
 fun HomePageContent(
@@ -66,7 +71,7 @@ fun HomePageContent(
             if(uiState.inProgressTasks.isNotEmpty()) {
                 VSpacer(Spacing.s4)
                 SectionHeader(
-                    title = "In Progress",
+                    title = stringResource(Res.string.in_progress2),
                     count = uiState.inProgressTasks.size
                 )
             }
@@ -96,7 +101,7 @@ fun HomePageContent(
             modifier = Modifier.padding(Spacing.s4)
         ) {
             SectionHeader(
-                title = "Task Group",
+                title = stringResource(Res.string.task_group),
                 count = uiState.taskGroups.size
             )
 
@@ -108,7 +113,7 @@ fun HomePageContent(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "No task groups yet",
+                        text = stringResource(Res.string.no_task_groups),
                         style = BodyLarge().copy(
                             color = TodoColors.Secondary.color,
                             textAlign = TextAlign.Center

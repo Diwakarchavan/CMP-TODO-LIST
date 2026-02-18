@@ -24,14 +24,16 @@ import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import todo_list.composeapp.generated.resources.Res
 import todo_list.composeapp.generated.resources.arrow___left
 import todo_list.composeapp.generated.resources.notification
+import todo_list.composeapp.generated.resources.todays_tasks
 
 @Composable
 fun TodoTopAppBar(
     modifier: Modifier = Modifier,
-    title: String = "Today's Tasks",
+    title: String = stringResource(Res.string.todays_tasks),
     navController: NavController,
     actionImage : DrawableResource = Res.drawable.notification,
     onActionClick : (() -> Unit)? = null

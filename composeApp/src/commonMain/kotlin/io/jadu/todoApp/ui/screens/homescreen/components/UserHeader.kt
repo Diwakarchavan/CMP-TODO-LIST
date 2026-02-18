@@ -30,8 +30,11 @@ import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.uiutils.HSpacer
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import todo_list.composeapp.generated.resources.Res
 import todo_list.composeapp.generated.resources.notification
+import todo_list.composeapp.generated.resources.user
+import todo_list.composeapp.generated.resources.user_hello
 import todo_list.composeapp.generated.resources.user_octagon
 
 @Composable
@@ -93,11 +96,11 @@ fun UserHeader(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Hello!",
+                    text = stringResource(Res.string.user_hello),
                     style = BodySmall()
                 )
                 Text(
-                    text = if (userProfile.name.isNotEmpty()) userProfile.name else "User",
+                    text = if (userProfile.name.isNotEmpty()) userProfile.name else stringResource(Res.string.user),
                     style = BodyLarge()
                 )
             }

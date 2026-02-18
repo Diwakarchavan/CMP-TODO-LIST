@@ -36,6 +36,13 @@ import io.jadu.todoApp.ui.theme.BodyXSmall
 import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.uiutils.VSpacer
+import org.jetbrains.compose.resources.stringResource
+import todo_list.composeapp.generated.resources.Res
+import todo_list.composeapp.generated.resources.done
+import todo_list.composeapp.generated.resources.in_progress2
+import todo_list.composeapp.generated.resources.select_task_status
+import todo_list.composeapp.generated.resources.task_status
+import todo_list.composeapp.generated.resources.to_do
 
 data class TaskStatusOption(
     val status: TaskStatus,
@@ -58,9 +65,9 @@ fun SelectTaskStatusBottomSheet(
     val selectedIndex = remember { mutableStateOf(selectedStatus) }
 
     val statusOptions = listOf(
-        TaskStatusOption(TaskStatus.TO_DO, "To Do", TodoColors.Primary.color),
-        TaskStatusOption(TaskStatus.IN_PROGRESS, "In Progress", TodoColors.Orange.color),
-        TaskStatusOption(TaskStatus.DONE, "Done", TodoColors.Emerald.color)
+        TaskStatusOption(TaskStatus.TO_DO, stringResource(Res.string.to_do), TodoColors.Primary.color),
+        TaskStatusOption(TaskStatus.IN_PROGRESS, stringResource(Res.string.in_progress2), TodoColors.Orange.color),
+        TaskStatusOption(TaskStatus.DONE, stringResource(Res.string.done), TodoColors.Emerald.color)
     )
 
     ModalBottomSheet(
@@ -106,7 +113,7 @@ fun StatusBottomSheetHeader(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Select Task Status",
+                text = stringResource(Res.string.select_task_status),
                 style = BodyLarge().copy(
                     fontWeight = FontWeight.Bold
                 )
@@ -164,7 +171,7 @@ fun StatusBottomSheetItem(
             }
             Column(horizontalAlignment = Alignment.Start) {
                 Text(
-                    text = "Task Status",
+                    text = stringResource(Res.string.task_status),
                     style = BodyXSmall().copy(color = TodoColors.Secondary.color)
                 )
                 Text(

@@ -34,6 +34,10 @@ import io.jadu.todoApp.ui.screens.homescreen.components.showSnackBar
 import io.jadu.todoApp.ui.theme.BodyLarge
 import io.jadu.todoApp.ui.theme.BodyNormal
 import io.jadu.todoApp.ui.theme.Spacing
+import org.jetbrains.compose.resources.stringResource
+import todo_list.composeapp.generated.resources.Res
+import todo_list.composeapp.generated.resources.hide_pass
+import todo_list.composeapp.generated.resources.show_pass
 
 @Composable
 fun TodoTextField(
@@ -107,7 +111,8 @@ fun TodoTextField(
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
                         Icon(
                             imageVector = visibilityIcon,
-                            contentDescription = if (passwordVisible) "Hide Password" else "Show Password"
+                            contentDescription = if (passwordVisible) stringResource(Res.string.hide_pass) else stringResource(
+                                Res.string.show_pass)
                         )
                     }
                 }

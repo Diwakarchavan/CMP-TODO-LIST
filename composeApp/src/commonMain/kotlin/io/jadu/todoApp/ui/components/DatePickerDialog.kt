@@ -21,6 +21,10 @@ import io.jadu.todoApp.ui.theme.TodoColors
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import org.jetbrains.compose.resources.stringResource
+import todo_list.composeapp.generated.resources.Res
+import todo_list.composeapp.generated.resources.cancel
+import todo_list.composeapp.generated.resources.ok
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
@@ -51,14 +55,14 @@ fun DatePickerDialog(
                     Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    TextButton(onClick = onDismiss) { Text("Cancel") }
+                    TextButton(onClick = onDismiss) { Text(stringResource(Res.string.cancel)) }
                     TextButton(onClick = {
                         // Format date as "dd MMM, yyyy" e.g., "17 Nov, 2025"
                         val monthName = selectedDate.month.name.lowercase().replaceFirstChar { it.uppercase() }.take(3)
                         val formattedDate = "${selectedDate.day} $monthName, ${selectedDate.year}"
                         onDateSelected(formattedDate)
                         onDismiss()
-                    }) { Text("OK") }
+                    }) { Text(stringResource(Res.string.ok)) }
                 }
             }
 

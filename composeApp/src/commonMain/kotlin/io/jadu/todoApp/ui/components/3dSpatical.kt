@@ -34,6 +34,7 @@ import io.jadu.todoApp.ui.theme.TodoColors
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import todo_list.composeapp.generated.resources.Res
 import todo_list.composeapp.generated.resources.book
 import todo_list.composeapp.generated.resources.briefcase
@@ -41,6 +42,7 @@ import todo_list.composeapp.generated.resources.calendar
 import todo_list.composeapp.generated.resources.clock_loader_icon
 import todo_list.composeapp.generated.resources.close_up_of_pink_coffee_cup
 import todo_list.composeapp.generated.resources.document_text
+import todo_list.composeapp.generated.resources.drag_to_rotate
 import todo_list.composeapp.generated.resources.female_sitting_on_the_floor_with_cup_in_hand_and_laptop_on_leg
 import todo_list.composeapp.generated.resources.home
 import todo_list.composeapp.generated.resources.multicolored_smartphone_notifications
@@ -317,7 +319,7 @@ fun SphereTextDemo(
                 }
 
                 Text(
-                    text = "Drag to rotate",
+                    text = stringResource(Res.string.drag_to_rotate),
                     style = TextStyle(
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Medium,

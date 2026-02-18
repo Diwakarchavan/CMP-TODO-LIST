@@ -45,10 +45,27 @@ import io.jadu.todoApp.ui.viewModel.EditTodoEvent
 import io.jadu.todoApp.ui.viewModel.EditTodoViewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import todo_list.composeapp.generated.resources.Res
 import todo_list.composeapp.generated.resources.calendar
 import todo_list.composeapp.generated.resources.delete_rounded_icon
+import todo_list.composeapp.generated.resources.delete_todo
+import todo_list.composeapp.generated.resources.delete_todo2
+import todo_list.composeapp.generated.resources.done
+import todo_list.composeapp.generated.resources.edit_task
+import todo_list.composeapp.generated.resources.in_progress
+import todo_list.composeapp.generated.resources.project_description
+import todo_list.composeapp.generated.resources.project_end_date
+import todo_list.composeapp.generated.resources.project_sel_date
+import todo_list.composeapp.generated.resources.project_st_date
+import todo_list.composeapp.generated.resources.save_changes
+import todo_list.composeapp.generated.resources.saving
+import todo_list.composeapp.generated.resources.task_desc_plac
+import todo_list.composeapp.generated.resources.task_group
+import todo_list.composeapp.generated.resources.task_name
+import todo_list.composeapp.generated.resources.task_status
+import todo_list.composeapp.generated.resources.to_do
 
 @Composable
 @Preview
@@ -107,7 +124,7 @@ fun EditTodoScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TodoTopAppBar(
-                title = "Edit Task",
+                title = stringResource(Res.string.edit_task),
                 modifier = Modifier.systemBarsPadding(),
                 navController = navController,
                 actionImage = Res.drawable.delete_rounded_icon,
@@ -125,7 +142,7 @@ fun EditTodoScreen(
                 // Task Group
                 SelectionCard(
                     cardConfig = SelectionCardConfig(
-                        title = "Task Group",
+                        title = stringResource(Res.string.task_group),
                         subtitle = uiState.selectedGroupCategory.displayName,
                         leadingIcon = {
                             Box(
@@ -155,11 +172,11 @@ fun EditTodoScreen(
                 // Task Status
                 SelectionCard(
                     cardConfig = SelectionCardConfig(
-                        title = "Task Status",
+                        title = stringResource(Res.string.task_status),
                         subtitle = when (uiState.selectedStatus) {
-                           TaskStatus.TO_DO -> "To Do"
-                            TaskStatus.IN_PROGRESS -> "In Progress"
-                            TaskStatus.DONE -> "Done"
+                           TaskStatus.TO_DO -> stringResource(Res.string.to_do)
+                            TaskStatus.IN_PROGRESS -> stringResource(Res.string.in_progress)
+                            TaskStatus.DONE -> stringResource(Res.string.done)
                         },
                         leadingIcon = {
                             val statusColor = when (uiState.selectedStatus) {
@@ -196,7 +213,7 @@ fun EditTodoScreen(
                 // Task Name
                 EditDetailCard(
                     value = uiState.title,
-                    placeHolderText = "Task Name",
+                    placeHolderText = stringResource(Res.string.task_name),
                     textStyle = BodyXLarge(),
                     onTextChange = {
                         viewModel.onEvent(EditTodoEvent.OnTitleChanged(it))
@@ -206,8 +223,8 @@ fun EditTodoScreen(
                 // Description
                 EditDetailCard(
                     value = uiState.description,
-                    title = "Description",
-                    placeHolderText = "Add task description here",
+                    title = stringResource(Res.string.project_description),
+                    placeHolderText = stringResource(Res.string.task_desc_plac),
                     onTextChange = { alphabet ->
                         viewModel.onEvent(EditTodoEvent.OnDescriptionChanged(alphabet))
                     }
@@ -216,8 +233,8 @@ fun EditTodoScreen(
                 // Start date
                 SelectionCard(
                     cardConfig = SelectionCardConfig(
-                        title = "Start Date",
-                        subtitle = uiState.startDate ?: "Select Date",
+                        title = stringResource(Res.string.project_st_date),
+                        subtitle = uiState.startDate ?: stringResource(Res.string.project_sel_date),
                         leadingIcon = {
                             Image(
                                 painter = painterResource(Res.drawable.calendar),
@@ -237,8 +254,8 @@ fun EditTodoScreen(
                 // End date
                 SelectionCard(
                     cardConfig = SelectionCardConfig(
-                        title = "End Date",
-                        subtitle = uiState.endDate ?: "Select Date",
+                        title = stringResource(Res.string.project_end_date),
+                        subtitle = uiState.endDate ?: stringResource(Res.string.project_sel_date),
                         leadingIcon = {
                             Image(
                                 painter = painterResource(Res.drawable.calendar),
@@ -261,7 +278,7 @@ fun EditTodoScreen(
                 CurvedButton(
                     modifier = Modifier,
                     isEnabled = !uiState.isLoading,
-                    text = if (uiState.isLoading) "Saving..." else "Save Changes"
+                    text = if (uiState.isLoading) stringResource(Res.string.saving) else stringResource(Res.string.save_changes)
                 ) {
                     viewModel.onEvent(EditTodoEvent.OnSaveTodo)
                 }
@@ -330,8 +347,8 @@ fun DeletePermissionDialog(
     onConfirm: () -> Unit
 ) {
     val config = CustomDialogConfig(
-        title = "Delete Todo",
-        subtitle = "Are you sure, to delete this Todo?"
+        title = stringResource(Res.string.delete_todo),
+        subtitle = stringResource(Res.string.delete_todo2)
     )
     if (isOpen)
         CustomDialog(

@@ -52,6 +52,9 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
+import todo_list.composeapp.generated.resources.Res
+import todo_list.composeapp.generated.resources.success
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -138,7 +141,7 @@ fun CustomSnackbarHost(
 
 @Composable
 fun BarfiSnackBar(
-    message: String = "Success",
+    message: String = stringResource(Res.string.success),
     isSuccess: Boolean = true,
     isVisible: Boolean = true,
     onAnimationComplete: (() -> Unit)? = null,
