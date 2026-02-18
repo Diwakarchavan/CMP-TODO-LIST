@@ -36,6 +36,10 @@ import io.jadu.todoApp.ui.theme.BodyXSmall
 import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.uiutils.VSpacer
+import org.jetbrains.compose.resources.stringResource
+import todo_list.composeapp.generated.resources.Res
+import todo_list.composeapp.generated.resources.select_task_group
+import todo_list.composeapp.generated.resources.task_group
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -102,7 +106,7 @@ fun BottomSheetHeader(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Select Task Group",
+                text = stringResource(Res.string.select_task_group),
                 style = BodyLarge().copy(
                     fontWeight = FontWeight.Bold
                 )
@@ -159,7 +163,7 @@ fun BottomSheetItem(
             }
             Column(horizontalAlignment = Alignment.Start) {
                 Text(
-                    text = "Task Group",
+                    text = stringResource(Res.string.task_group),
                     style = BodyXSmall().copy(color = TodoColors.Secondary.color)
                 )
                 Text(

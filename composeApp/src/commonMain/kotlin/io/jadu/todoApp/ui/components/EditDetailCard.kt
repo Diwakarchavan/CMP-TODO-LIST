@@ -29,11 +29,14 @@ import io.jadu.todoApp.ui.theme.BodySmall
 import io.jadu.todoApp.ui.theme.BodyXSmall
 import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
+import org.jetbrains.compose.resources.stringResource
+import todo_list.composeapp.generated.resources.Res
+import todo_list.composeapp.generated.resources.project_name
 
 @Composable
 @Preview
 fun EditDetailCard(
-    title : String = "Project Name",
+    title : String = stringResource(Res.string.project_name),
     value : String = "",
     placeHolderText : String = "",
     singleLine : Boolean = false,

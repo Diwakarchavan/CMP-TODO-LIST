@@ -26,6 +26,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.jadu.todoApp.ui.theme.BodyXLarge
 import io.jadu.todoApp.ui.theme.TodoColors
+import org.jetbrains.compose.resources.stringResource
+import todo_list.composeapp.generated.resources.Res
+import todo_list.composeapp.generated.resources.arrow_right
 
 @Composable
 fun CurvedButton(
@@ -115,7 +118,7 @@ fun CurvedButton(
             if (buttonConfig.shouldShowArrow)  {
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "→",
+                    text = stringResource(Res.string.arrow_right),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Normal,
                     color = buttonConfig.contentColor

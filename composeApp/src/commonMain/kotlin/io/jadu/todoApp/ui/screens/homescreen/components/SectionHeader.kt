@@ -18,10 +18,13 @@ import io.jadu.todoApp.ui.theme.BodyXXLarge
 import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.uiutils.HSpacer
+import org.jetbrains.compose.resources.stringResource
+import todo_list.composeapp.generated.resources.Res
+import todo_list.composeapp.generated.resources.progress
 
 @Composable
 @Preview(showBackground = true)
-fun SectionHeader(title: String = "Progress", count: Int? = null) {
+fun SectionHeader(title: String = stringResource(Res.string.progress), count: Int? = null) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

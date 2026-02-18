@@ -25,6 +25,10 @@ import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.uiutils.HSpacer
 import io.jadu.todoApp.ui.uiutils.VSpacer
+import org.jetbrains.compose.resources.stringResource
+import todo_list.composeapp.generated.resources.Res
+import todo_list.composeapp.generated.resources.task_card
+import todo_list.composeapp.generated.resources.task_card_btn
 
 @Composable
 @Preview(showBackground = true)
@@ -52,7 +56,7 @@ fun TaskProgressCard(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = "Your Today's task \n almost done",
+                    text = stringResource(Res.string.task_card),
                     style = BodyLarge().copy(
                         color = TodoColors.Light.color
                     )
@@ -61,7 +65,7 @@ fun TaskProgressCard(
                 CurvedButton(
                     modifier = Modifier,
                     onClick = onViewTaskClick,
-                    text = "View Task",
+                    text = stringResource(Res.string.task_card_btn),
                     buttonConfig = CurvedButtonConfig(
                         cornerRadius = 40f,
                         verticalBulgeFactor = 10f,

@@ -25,13 +25,16 @@ import io.jadu.todoApp.ui.theme.BodySmall
 import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.uiutils.VSpacer
+import org.jetbrains.compose.resources.stringResource
+import todo_list.composeapp.generated.resources.Res
+import todo_list.composeapp.generated.resources.jetpack_compose
 
 @Composable
 @Preview
 fun InProgressTaskCard(
     task: InProgressTask = InProgressTask(
         id = "1",
-        title = "Working on Jetpack Compose",
+        title = stringResource(Res.string.jetpack_compose),
         category = TaskCategory.Personal,
         progressPercentage = 0.5f,
     )

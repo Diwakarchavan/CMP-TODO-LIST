@@ -33,8 +33,12 @@ import io.jadu.todoApp.ui.theme.BodyXSmall
 import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import todo_list.composeapp.generated.resources.Res
 import todo_list.composeapp.generated.resources.clock_loader_icon
+import todo_list.composeapp.generated.resources.done
+import todo_list.composeapp.generated.resources.in_progress2
+import todo_list.composeapp.generated.resources.to_do
 
 @Composable
 @Preview
@@ -46,9 +50,9 @@ fun ScheduleTaskCard(
     val category = task.category
 
     val statusText = when (task.status) {
-        TaskStatus.TO_DO -> "To Do"
-        TaskStatus.IN_PROGRESS -> "In Progress"
-        TaskStatus.DONE -> "Done"
+        TaskStatus.TO_DO -> stringResource(Res.string.to_do)
+        TaskStatus.IN_PROGRESS -> stringResource(Res.string.in_progress2)
+        TaskStatus.DONE -> stringResource(Res.string.done)
     }
 
     val statusColor = when (task.status) {

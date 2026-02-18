@@ -6,6 +6,12 @@
     <string name="onboarding_text">This productive tool is designed to help<br/>you better manage your task<br/>project-wisely conveniently!</string>
     <string name="onboarding_button">Let\'s Start</string>
 
+    <!-- HOMESCREEN -->
+    <string name="task_card">Your Today's task <br/> almost done</string>
+    <string name="task_card_btn">View Task</string>
+    <string name="tasks">Tasks</string>
+    <string name="in_progress2">In Progress</string>
+
     <!-- SETTINGS SCREEN-->
     <string name="settings_title">Settings</string>
     <string name="settings_save_name">Save Name</string>
@@ -35,6 +41,10 @@
     <string name="tasks_going">on Going</string>
     <string name="tasks_done">Done</string>
     <string name="no_tasks">No tasks for this date</string>
+    <string name="todays_tasks">Today's Tasks</string>
+    <string name="select_task_status">Select Task Status</string>
+    <string name="select_task_group">Select Task Group</string>
+
 
     <!-- ADD PROJECT-->
     <string name="add_project_title">Add Project</string>
@@ -45,10 +55,13 @@
     <string name="project_st_date">Start Date</string>
     <string name="project_sel_date">Select Date</string>
     <string name="project_end_date">End Date</string>
+    <string name="project_name">Project Name</string>
 
-    <!-- EDIT TODO-->
+
+    <!-- EDIT -->
     <string name="edit_task">Edit Task</string>
     <string name="task_group">Task Group</string>
+    <string name="no_task_groups">No task groups yet</string>
     <string name="task_status">Task Status</string>
     <string name="to_do">To Do</string>
     <string name="in_progress">To Do</string>
@@ -57,9 +70,6 @@
     <string name="task_desc_plac">Add task description here</string>
     <string name="delete_todo">Delete Todo</string>
     <string name="delete_todo2">Are you sure, to delete this Todo?</string>
-
-
-
 
 
     <!-- NAVBAR -->
@@ -74,9 +84,21 @@
     <string name="cancel">Cancel</string>
     <string name="saving">Saving...</string>
     <string name="save_changes">Save Changes</string>
+    <string name="success">Success</string>
+    <string name="hide_pass">Hide Password</string>
+    <string name="show_pass">Show Password</string>
+    <string name="ok">OK</string>
+    <string name="arrow_right">→</string>
+    <string name="drag_to_rotate">Drag to rotate</string>
+
+
 
     <!-- MISC -->
     <string name="top_categ">Most Used Categories</string>
+    <string name="user_hello">Hello!</string>
+    <string name="user">User</string>
+    <string name="progress">Progress</string>
+    <string name="jetpack_compose">Working on Jetpack Compose</string>
 
 
 

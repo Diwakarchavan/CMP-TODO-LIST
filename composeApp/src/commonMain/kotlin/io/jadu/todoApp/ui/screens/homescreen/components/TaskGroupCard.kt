@@ -27,6 +27,9 @@ import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.uiutils.HSpacer
 import io.jadu.todoApp.ui.uiutils.VSpacer
+import org.jetbrains.compose.resources.stringResource
+import todo_list.composeapp.generated.resources.Res
+import todo_list.composeapp.generated.resources.tasks
 
 
 @Composable
@@ -76,7 +79,7 @@ fun TaskGroupCard(
                     )
                     VSpacer(Spacing.s1)
                     Text(
-                        text = taskGroup.taskCount.toString() + " Tasks",
+                        text = taskGroup.taskCount.toString() + stringResource(Res.string.tasks),
                         style = BodySmall().copy(
                             color = TodoColors.Secondary.color
                         )
