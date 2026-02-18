@@ -9,6 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -21,6 +24,7 @@ import io.jadu.todoApp.ui.animatedBottomBar.models.CurveAnimationType
 import io.jadu.todoApp.ui.animatedBottomBar.models.IconSource
 import io.jadu.todoApp.ui.animatedBottomBar.models.NavItem
 import io.jadu.todoApp.ui.route.NavRoute
+import io.jadu.todoApp.ui.screens.AboutUsPage
 import io.jadu.todoApp.ui.screens.AddProject
 import io.jadu.todoApp.ui.screens.SettingsPage
 import io.jadu.todoApp.ui.screens.TaskScreen
@@ -76,9 +80,14 @@ fun BottomBarNavigation(
 
     val currentRoute = currentBackStackEntry?.destination?.route
 
-    val selectedIndex = bottomNavItems.indexOfFirst { item ->
+    var selectedIndex by rememberSaveable { mutableStateOf(0) }
+
+    val matchedIndex = bottomNavItems.indexOfFirst { item ->
         currentRoute?.contains(item.route::class.simpleName ?: "") == true
-    }.coerceAtLeast(0)
+    }
+    if (matchedIndex >= 0) {
+        selectedIndex = matchedIndex
+    }
 
     Surface(
         modifier = Modifier.navigationBarsPadding(),
@@ -114,6 +123,10 @@ fun BottomBarNavigation(
 
                 composable<NavRoute.SettingsPage> {
                     SettingsPage(navController)
+                }
+
+                composable<NavRoute.AboutUs> {
+                    AboutUsPage(navController)
                 }
 
                 composable<NavRoute.TestScreen> {
