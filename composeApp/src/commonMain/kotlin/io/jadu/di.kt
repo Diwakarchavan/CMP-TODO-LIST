@@ -4,6 +4,7 @@ package io.jadu
 import androidx.room.RoomDatabase
 import io.jadu.todoApp.data.TodoRepositoryImpl
 import io.jadu.todoApp.data.local.AppDatabase
+import io.jadu.todoApp.data.local.ThemeRepository
 import io.jadu.todoApp.domain.TodoRepository
 import io.jadu.todoApp.ui.notification.NotificationViewModel
 import io.jadu.todoApp.ui.viewModel.AddProjectViewModel
@@ -37,12 +38,13 @@ val appModule = module {
     single { get<AppDatabase>().getDao() }
     single { get<AppDatabase>().getUserProfileDao() }
     single { OnBoardingViewModel(get()) }
+    single { ThemeRepository(get()) }
     single<TodoRepository> { TodoRepositoryImpl() }
     single { AddProjectViewModel(get()) }
     single { EditTodoViewModel(get()) }
     single { TaskScreenViewModel(get()) }
     single { HomeScreenViewModel(get(), get()) }
-    single { SettingsViewModel(get(), get()) }
+    single { SettingsViewModel(get(), get(), get()) }
     single { MostUsedCategoryViewModel(get()) }
     single { NotificationViewModel(get()) }
 }

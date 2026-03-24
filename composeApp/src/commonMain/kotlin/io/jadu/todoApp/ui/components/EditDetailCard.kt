@@ -53,7 +53,7 @@ fun EditDetailCard(
                 spotColor = TodoColors.Black.color.copy(alpha = 0.12f)
             )
             .clip(RoundedCornerShape(Spacing.s4))
-            .background(TodoColors.White.color),
+            .background(MaterialTheme.colorScheme.surface),
         verticalArrangement = Arrangement.spacedBy(Spacing.s1),
         horizontalAlignment = Alignment.Start
     ) {

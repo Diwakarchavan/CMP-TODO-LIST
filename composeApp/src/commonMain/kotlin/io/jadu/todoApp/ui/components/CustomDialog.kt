@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -103,8 +104,8 @@ fun CustomDialog(
                         CurvedButton(
                             modifier = Modifier.weight(1f).height(Spacing.s8),
                             buttonConfig = CurvedButtonConfig(
-                                containerColor = TodoColors.Light.color,
-                                contentColor = TodoColors.Dark.color,
+                                containerColor = MaterialTheme.colorScheme.surface,
+                                contentColor = MaterialTheme.colorScheme.onSurface,
                                 cornerRadius = Spacing.s3.value,
                                 gradientShadowColor = Color.Transparent,
                                 verticalBulgeFactor = 0f

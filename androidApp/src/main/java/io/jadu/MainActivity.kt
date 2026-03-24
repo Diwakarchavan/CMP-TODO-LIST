@@ -5,12 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
-import io.jadu.todoApp.ui.theme.TodoColors
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,11 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         initKoin()
         setContent {
-            Surface(
-                color = TodoColors.LightPrimary.color
-            ) {
-                App()
-            }
+            App()
         }
     }
 }

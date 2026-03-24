@@ -29,6 +29,8 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -91,6 +93,8 @@ import todo_list.composeapp.generated.resources.settings_feedback_desc
 import todo_list.composeapp.generated.resources.settings_feedback_plac
 import todo_list.composeapp.generated.resources.settings_infocard_compl
 import todo_list.composeapp.generated.resources.settings_infocard_remain
+import todo_list.composeapp.generated.resources.settings_dark_mode
+import todo_list.composeapp.generated.resources.settings_dark_mode_desc
 import todo_list.composeapp.generated.resources.settings_report
 import todo_list.composeapp.generated.resources.settings_report_desc
 import todo_list.composeapp.generated.resources.settings_report_plac
@@ -107,6 +111,7 @@ fun SettingsPage(
     viewModel: SettingsViewModel = koinInject()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val isDarkMode by viewModel.isDarkMode.collectAsState()
 
     var name by remember { mutableStateOf("") }
     var isEditing by remember { mutableStateOf(false) }
@@ -414,6 +419,10 @@ fun SettingsPage(
                             Spacer(modifier = Modifier.height(16.dp))
 
                             // Action Buttons
+                            DarkModeToggle(
+                                isDarkMode = isDarkMode,
+                                onToggle = { viewModel.toggleDarkMode(it) }
+                            )
                             BorderButton(
                                 stringResource(Res.string.settings_about),
                                 onClick = {
@@ -453,6 +462,46 @@ fun SettingsPage(
                     // Handle submission
                 },
                 isFeedbackClicked = isFeedback.value
+            )
+        }
+    }
+}
+
+@Composable
+private fun DarkModeToggle(
+    isDarkMode: Boolean,
+    onToggle: (Boolean) -> Unit
+) {
+    TodoElevatedCard(
+        modifier = Modifier.padding(horizontal = Spacing.s4)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column {
+                Text(
+                    text = stringResource(Res.string.settings_dark_mode),
+                    style = BodyLarge().copy(fontWeight = FontWeight.Bold),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = stringResource(Res.string.settings_dark_mode_desc),
+                    style = BodySmall(),
+                    color = Color.Gray
+                )
+            }
+            Switch(
+                checked = isDarkMode,
+                onCheckedChange = onToggle,
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = TodoColors.White.color,
+                    checkedTrackColor = MaterialTheme.colorScheme.primary,
+                    uncheckedThumbColor = MaterialTheme.colorScheme.onSurface,
+                    uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
+                )
             )
         }
     }
@@ -532,7 +581,7 @@ private fun TextFieldDialogue(
     var text by remember { mutableStateOf("") }
 
     AlertDialog(
-        containerColor = TodoColors.Light.color,
+        containerColor = MaterialTheme.colorScheme.surface,
         onDismissRequest = onDismissRequest,
         title = {
             Text(
