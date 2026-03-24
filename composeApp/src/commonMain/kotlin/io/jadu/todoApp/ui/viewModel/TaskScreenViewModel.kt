@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import io.jadu.todoApp.data.local.TodoDao
 import io.jadu.todoApp.data.model.TaskStatus
 import io.jadu.todoApp.data.model.TodoItem
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,7 +22,8 @@ data class TaskScreenUiState(
     val allTodos: List<TodoItem> = emptyList(),
     val filteredTodos: List<TodoItem> = emptyList(),
     val selectedFilter: String = "All",
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val isRefreshing: Boolean = false
 )
 
 class TaskScreenViewModel(
@@ -40,6 +42,14 @@ class TaskScreenViewModel(
     private fun setTodayAsSelectedDate() {
         val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
         _uiState.update { it.copy(selectedDate = today) }
+    }
+
+    fun refresh() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isRefreshing = true) }
+            delay(600)
+            _uiState.update { it.copy(isRefreshing = false) }
+        }
     }
 
     fun loadAllTodos() {

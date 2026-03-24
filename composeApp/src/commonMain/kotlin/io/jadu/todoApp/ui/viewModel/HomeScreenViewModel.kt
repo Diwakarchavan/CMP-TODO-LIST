@@ -10,6 +10,7 @@ import io.jadu.todoApp.data.model.TaskGroupCategory
 import io.jadu.todoApp.data.model.TaskStatus
 import io.jadu.todoApp.data.model.TodoItem
 import io.jadu.todoApp.data.model.UserProfile
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,7 +30,8 @@ data class HomeScreenUiState(
     val todayProgress: Float = 0f,
     val todayTasksCount: Int = 0,
     val userProfile: UserProfile = UserProfile(),
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val isRefreshing: Boolean = false
 )
 
 class HomeScreenViewModel(
@@ -42,6 +44,14 @@ class HomeScreenViewModel(
 
     init {
         loadAllData()
+    }
+
+    fun refresh() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isRefreshing = true) }
+            delay(600)
+            _uiState.update { it.copy(isRefreshing = false) }
+        }
     }
 
     private fun loadAllData() {

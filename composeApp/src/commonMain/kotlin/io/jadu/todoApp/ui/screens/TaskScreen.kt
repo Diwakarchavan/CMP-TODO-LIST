@@ -14,7 +14,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -49,7 +53,7 @@ import todo_list.composeapp.generated.resources.tasks_going
 import todo_list.composeapp.generated.resources.tasks_todo
 import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
+@OptIn(ExperimentalTime::class, ExperimentalMaterial3Api::class)
 @Composable
 @Preview
 fun TaskScreen(
@@ -57,6 +61,7 @@ fun TaskScreen(
     viewModel: TaskScreenViewModel = koinInject()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val pullToRefreshState = rememberPullToRefreshState()
 
     val chips = listOf(
         stringResource(Res.string.tasks_all),
@@ -66,6 +71,21 @@ fun TaskScreen(
     )
 
     TodoBackgroundScreen {
+        PullToRefreshBox(
+            isRefreshing = uiState.isRefreshing,
+            onRefresh = viewModel::refresh,
+            state = pullToRefreshState,
+            modifier = Modifier.fillMaxSize(),
+            indicator = {
+                PullToRefreshDefaults.Indicator(
+                    state = pullToRefreshState,
+                    isRefreshing = uiState.isRefreshing,
+                    containerColor = TodoColors.LightPrimary.color,
+                    color = TodoColors.Primary.color,
+                    modifier = Modifier.align(Alignment.TopCenter)
+                )
+            }
+        ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.Center,
@@ -151,6 +171,7 @@ fun TaskScreen(
                 }
             }
         }
+        } // end PullToRefreshBox
 
     }
 }
