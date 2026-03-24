@@ -59,7 +59,7 @@ fun EditDetailCard(
         TodoTextField(
             value = value,
             onValueChange = onTextChange,
-            textColor = TodoColors.Dark.color,
+            textColor = MaterialTheme.colorScheme.onSurface,
             unfocusedBorderColor = Color.Transparent,
             focusedBorderColor = Color.Transparent,
             placeholder = placeHolderText,
