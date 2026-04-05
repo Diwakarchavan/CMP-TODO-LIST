@@ -19,6 +19,7 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import io.jadu.todoApp.ui.animatedBottomBar.CurvedBottomNavigation
 import io.jadu.todoApp.ui.animatedBottomBar.models.CurveAnimationType
 import io.jadu.todoApp.ui.animatedBottomBar.models.IconSource
@@ -26,6 +27,7 @@ import io.jadu.todoApp.ui.animatedBottomBar.models.NavItem
 import io.jadu.todoApp.ui.route.NavRoute
 import io.jadu.todoApp.ui.screens.AboutUsPage
 import io.jadu.todoApp.ui.screens.AddProject
+import io.jadu.todoApp.ui.screens.EditTodoScreen
 import io.jadu.todoApp.ui.screens.SettingsPage
 import io.jadu.todoApp.ui.screens.TaskScreen
 import io.jadu.todoApp.ui.screens.TestScreen
@@ -131,6 +133,14 @@ fun BottomBarNavigation(
 
                 composable<NavRoute.TestScreen> {
                     TestScreen()
+                }
+
+                composable<NavRoute.EditTodo> { backStackEntry ->
+                    val editTodoRoute = backStackEntry.toRoute<NavRoute.EditTodo>()
+                    EditTodoScreen(
+                        navController = navController,
+                        todoId = editTodoRoute.todoId
+                    )
                 }
             }
 
