@@ -5,6 +5,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavEntry
@@ -38,19 +39,23 @@ val navSerializersModule = SerializersModule {
 }
 
 /**
- * Creates and remembers a [NavigationState] across configuration changes and process death.
+ * Remembers a [NavigationState] across configuration changes and process death.
  *
- * @param startRoute The initial destination of the app.
- * @param topLevelRoutes A set of destinations that maintain their own independent backstacks.
+ * @param startRoute Initial destination.
+ * @param topLevelRoutes Destinations that each maintain their own independent backstack.
  */
 @Composable
 fun rememberNavigationState(
     startRoute: NavKey,
-    topLevelRoutes: Set<NavKey>
+    topLevelRoutes: List<NavKey>
 ): NavigationState {
 
-    val topLevelRoute = remember(startRoute, topLevelRoutes) {
+    val topLevelRoute = rememberSaveable(startRoute, stateSaver = TopLevelNavKeySaver) {
         mutableStateOf(startRoute)
+    }
+
+    val tabHistory = rememberSaveable(startRoute, stateSaver = TabHistorySaver) {
+        mutableStateOf(listOf())
     }
 
     val backStacks = topLevelRoutes.associateWith { key ->
@@ -64,25 +69,28 @@ fun rememberNavigationState(
         NavigationState(
             startRoute = startRoute,
             topLevelRoute = topLevelRoute,
+            tabHistoryState = tabHistory,
             backStacks = backStacks
         )
     }
 }
 
 /**
- * State holder managing multiple independent backstacks for top-level navigation.
+ * Holds multiple independent backstacks for top-level (tab) navigation.
  *
- * @param startRoute The root destination. Popping from this route exits the app.
- * @param topLevelRoute State holding the currently active top-level route.
- * @param backStacks A map containing the active backstack for each top-level route.
+ * @param startRoute Root destination — popping here exits the app.
+ * @param topLevelRoute Saveable state for the currently active tab.
+ * @param tabHistoryState Saveable state for tab-switch history.
+ * @param backStacks Per-tab backstacks.
  */
 class NavigationState(
     val startRoute: NavKey,
     topLevelRoute: MutableState<NavKey>,
+    tabHistoryState: MutableState<List<NavKey>>,
     val backStacks: Map<NavKey, NavBackStack<NavKey>>
 ) {
     var topLevelRoute by topLevelRoute
-    var tabHistory by mutableStateOf(listOf<NavKey>())
+    var tabHistory by tabHistoryState
 
     val stacksInUse: List<NavKey>
         get() = if (topLevelRoute == startRoute) {

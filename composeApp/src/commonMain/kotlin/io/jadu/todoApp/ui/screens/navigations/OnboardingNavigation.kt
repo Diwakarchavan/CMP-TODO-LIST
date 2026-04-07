@@ -20,7 +20,7 @@ fun OnboardingNavigation(
 ) {
     val navigationState = rememberNavigationState(
         startRoute = NavRoute.Onboarding,
-        topLevelRoutes = setOf(NavRoute.Onboarding)
+        topLevelRoutes = listOf(NavRoute.Onboarding)
     )
     val navigator = remember { Navigator(navigationState) }
 

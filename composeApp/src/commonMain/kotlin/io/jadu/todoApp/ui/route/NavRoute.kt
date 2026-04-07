@@ -1,6 +1,7 @@
 package io.jadu.todoApp.ui.route
 
 import androidx.navigation3.runtime.NavKey
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -10,6 +11,7 @@ sealed interface NavRoute : NavKey {
     data object CategorySphereScreen : NavRoute
 
     @Serializable
+    @SerialName("OnboardingRoute")
     data object Onboarding : NavRoute
 
     @Serializable

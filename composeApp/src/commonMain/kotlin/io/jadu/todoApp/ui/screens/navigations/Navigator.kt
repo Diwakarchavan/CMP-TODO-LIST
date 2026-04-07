@@ -22,7 +22,7 @@ class Navigator(val state: NavigationState) {
                 } else {
                     // Ensure we don't have cycles in our backstack.
                     val updatedHistory = state.tabHistory.filter { it != route }.toMutableList()
-                    
+
                     // Add the current tab we are leaving to the history
                     if (state.topLevelRoute != state.startRoute) {
                         updatedHistory.add(state.topLevelRoute)
@@ -36,7 +36,11 @@ class Navigator(val state: NavigationState) {
                 }
             }
         } else {
-            state.backStacks[state.topLevelRoute]?.add(route)
+            // prevent duplicate entries in the back stack.
+            val currentStack = state.backStacks[state.topLevelRoute]
+            if (currentStack?.lastOrNull() != route) {
+                currentStack?.add(route)
+            }
         }
     }
 
@@ -45,8 +49,7 @@ class Navigator(val state: NavigationState) {
      * If at the root of the current tab, it switches to the previously active tab.
      */
     fun goBack(){
-        val currentStack = state.backStacks[state.topLevelRoute] ?:
-        error("Stack for ${state.topLevelRoute} not found")
+        val currentStack = state.backStacks[state.topLevelRoute] ?: return
         val currentRoute = currentStack.last()
 
         if (currentRoute == state.topLevelRoute) {
