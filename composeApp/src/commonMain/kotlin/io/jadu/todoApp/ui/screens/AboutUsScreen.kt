@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.navigation.NavHostController
 import io.jadu.todoApp.ui.components.TodoTopAppBar
 import io.jadu.todoApp.ui.theme.BodyLarge
 import io.jadu.todoApp.ui.theme.BodyNormal
@@ -30,15 +29,15 @@ import todo_list.composeapp.generated.resources.about_title
 
 
 @Composable
-fun AboutUsPage(
-    navHostController: NavHostController
+fun AboutUsScreen(
+    onBack: () -> Unit
 ) {
     Scaffold(
         topBar = {
             TodoTopAppBar(
                 modifier = Modifier.systemBarsPadding(),
                 title = stringResource(Res.string.about_title),
-                navController = navHostController
+                onBack = onBack
             )
         }
     ) { padding ->

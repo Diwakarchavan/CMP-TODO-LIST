@@ -1,9 +1,12 @@
 package io.jadu.todoApp.ui.screens.navigations
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.ui.NavDisplay
+import androidx.navigation3.runtime.NavKey
 import io.jadu.todoApp.ui.route.NavRoute
 import io.jadu.todoApp.ui.screens.OnboardingScreen
 
@@ -13,18 +16,25 @@ import io.jadu.todoApp.ui.screens.OnboardingScreen
  */
 @Composable
 fun OnboardingNavigation(
-    navController: NavHostController,
     onOnboardingComplete: () -> Unit
 ) {
-    NavHost(
-        navController = navController,
-        startDestination = NavRoute.Onboarding
-    ) {
-        composable<NavRoute.Onboarding> {
+    val navigationState = rememberNavigationState(
+        startRoute = NavRoute.Onboarding,
+        topLevelRoutes = setOf(NavRoute.Onboarding)
+    )
+    val navigator = remember { Navigator(navigationState) }
+
+    val entryProvider = entryProvider<NavKey> {
+        entry<NavRoute.Onboarding> {
             OnboardingScreen(
                 onOnboardingComplete = onOnboardingComplete
             )
         }
     }
-}
 
+    NavDisplay(
+        modifier = Modifier.fillMaxSize(),
+        entries = navigationState.toEntries(entryProvider),
+        onBack = { navigator.goBack() }
+    )
+}

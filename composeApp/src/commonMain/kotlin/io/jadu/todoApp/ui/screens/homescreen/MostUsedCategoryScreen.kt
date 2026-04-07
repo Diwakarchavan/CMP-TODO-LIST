@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import io.jadu.todoApp.ui.components.SphereTextDemo
 import io.jadu.todoApp.ui.components.TodoTopAppBar
 import io.jadu.todoApp.ui.screens.ColoredDot
@@ -40,7 +39,7 @@ import kotlin.random.Random
 @Composable
 @Preview
 fun MostUsedCategoryScreen(
-    navHostController: NavHostController,
+    onBack: () -> Unit,
     viewModel: MostUsedCategoryViewModel = koinInject()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -50,7 +49,7 @@ fun MostUsedCategoryScreen(
             TodoTopAppBar(
                 modifier = Modifier.systemBarsPadding(),
                 title = stringResource(Res.string.top_categ),
-                navController = navHostController
+                onBack = onBack
             )
         }
     ) {

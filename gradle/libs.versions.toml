@@ -7,14 +7,14 @@ androidx-activity = "1.11.0"
 androidx-appcompat = "1.7.1"
 androidx-core = "1.17.0"
 androidx-espresso = "3.7.0"
-androidx-lifecycle = "2.9.5"
+androidx-lifecycle = "2.10.0"
 androidx-testExt = "1.3.0"
 composeMultiplatform = "1.10.0"
 junit = "4.13.2"
 koin = "4.1.1"
 kotlin = "2.3.0"
 materialIconsExtended = "1.7.3"
-navigationCompose = "2.9.1"
+cmpNavigation3 = "1.0.0-alpha06"
 room = "2.8.4"
 sqlite = "2.6.2"
 ksp = "2.3.2"
@@ -39,7 +39,8 @@ material-icons-extended = { module = "org.jetbrains.compose.material:material-ic
 androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+jetbrains-navigation3-ui = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "cmpNavigation3" }
+jetbrains-lifecycle-viewmodel-nav3 = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "androidx-lifecycle" }
 datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }

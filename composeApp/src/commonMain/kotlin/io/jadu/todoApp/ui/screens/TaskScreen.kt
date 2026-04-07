@@ -29,14 +29,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import io.jadu.todoApp.data.model.toScheduleTaskModel
 import io.jadu.todoApp.ui.components.CarouselCalendar
 import io.jadu.todoApp.ui.components.CurvedButton
 import io.jadu.todoApp.ui.components.CurvedButtonConfig
 import io.jadu.todoApp.ui.components.ScheduleTaskCard
 import io.jadu.todoApp.ui.components.TodoTopAppBar
-import io.jadu.todoApp.ui.route.NavRoute
 import io.jadu.todoApp.ui.theme.BodyLarge
 import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
@@ -57,7 +55,8 @@ import kotlin.time.ExperimentalTime
 @Composable
 @Preview
 fun TaskScreen(
-    navController: NavController,
+    onNavigateToEditTask: (todoId: Long) -> Unit,
+    onBack: () -> Unit,
     viewModel: TaskScreenViewModel = koinInject()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -93,7 +92,7 @@ fun TaskScreen(
         ) {
             TodoTopAppBar(
                 modifier = Modifier.statusBarsPadding().systemBarsPadding(),
-                navController = navController
+                onBack = onBack
             )
 
             CarouselCalendar(
@@ -164,7 +163,7 @@ fun TaskScreen(
                         ScheduleTaskCard(
                             task = todo.toScheduleTaskModel(),
                             onClick = {
-                                navController.navigate(NavRoute.EditTodo(todoId = todo.id))
+                                onNavigateToEditTask(todo.id)
                             }
                         )
                     }

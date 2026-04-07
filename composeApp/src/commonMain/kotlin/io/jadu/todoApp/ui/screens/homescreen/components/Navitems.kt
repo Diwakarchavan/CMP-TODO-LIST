@@ -18,8 +18,7 @@ import todo_list.composeapp.generated.resources.navbar_tasks
 import todo_list.composeapp.generated.resources.user_octagon
 
 @Composable
-fun NavItems(){
-val navItems = listOf(
+fun getNavItems(): List<NavItem> = listOf(
     NavItem(
         icon = IconSource.Drawable(Res.drawable.home),
         label = stringResource(Res.string.navbar_home),
@@ -39,12 +38,11 @@ val navItems = listOf(
     NavItem(
         icon = IconSource.Drawable(Res.drawable.calendar),
         label = stringResource(Res.string.navbar_calendar),
-        route = NavRoute.SplashScreen
+        route = NavRoute.CategorySphereScreen
     ),
     NavItem(
         icon = IconSource.Drawable(Res.drawable.user_octagon),
         label = stringResource(Res.string.navbar_settings),
-        route = NavRoute.SettingsPage
+        route = NavRoute.SettingsScreen
     )
 )
-}

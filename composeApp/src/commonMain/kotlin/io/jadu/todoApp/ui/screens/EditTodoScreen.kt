@@ -23,7 +23,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
 import io.jadu.todoApp.data.model.TaskStatus
 import io.jadu.todoApp.ui.components.CurvedButton
 import io.jadu.todoApp.ui.components.CustomDialog
@@ -70,7 +69,7 @@ import todo_list.composeapp.generated.resources.to_do
 @Composable
 @Preview
 fun EditTodoScreen(
-    navController: NavHostController,
+    onBack: () -> Unit,
     todoId: Long,
     viewModel: EditTodoViewModel = koinInject()
 ) {
@@ -113,7 +112,7 @@ fun EditTodoScreen(
     LaunchedEffect(uiState.isSaved, uiState.isDeleted) {
         if (uiState.isSaved || uiState.isDeleted) {
             viewModel.onEvent(EditTodoEvent.OnUiReset)
-            navController.navigateUp()
+            onBack()
         }
     }
 
@@ -126,7 +125,7 @@ fun EditTodoScreen(
             TodoTopAppBar(
                 title = stringResource(Res.string.edit_task),
                 modifier = Modifier.systemBarsPadding(),
-                navController = navController,
+                onBack = onBack,
                 actionImage = Res.drawable.delete_rounded_icon,
                 onActionClick = {
                     shouldDeleteTodo = true

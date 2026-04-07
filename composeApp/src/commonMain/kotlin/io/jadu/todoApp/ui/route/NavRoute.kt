@@ -1,52 +1,48 @@
 package io.jadu.todoApp.ui.route
 
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class NavRoute {
+sealed interface NavRoute : NavKey {
 
     @Serializable
-    data object SplashScreen : NavRoute()
+    data object CategorySphereScreen : NavRoute
 
     @Serializable
-    data object Onboarding : NavRoute()
+    data object Onboarding : NavRoute
 
     @Serializable
-    data object TodoList : NavRoute()
+    data object Home : NavRoute
 
     @Serializable
-    data object Home : NavRoute()
+    data object TaskScreen : NavRoute
 
     @Serializable
-    data object TaskScreen : NavRoute()
+    data object AddProject : NavRoute
 
     @Serializable
-    data object AddProject: NavRoute()
+    data object SettingsScreen : NavRoute
 
     @Serializable
-    data object SettingsPage : NavRoute()
+    data object AboutUsScreen : NavRoute
 
     @Serializable
-    data object AboutUs : NavRoute()
+    data class EditTodo(val todoId: Long) : NavRoute
 
     @Serializable
-    data class EditTodo(val todoId: Long) : NavRoute()
-
-    @Serializable
-    data object TestScreen : NavRoute()
+    data object TestScreen : NavRoute
 }
 
 /**
  * Root level navigation graph routes
  */
 @Serializable
-sealed class RootNavGraph {
-    @Serializable
-    data object Onboarding : RootNavGraph()
+sealed interface RootNavGraph : NavKey {
 
     @Serializable
-    data object BottomNavBar : RootNavGraph()
+    data object Onboarding : RootNavGraph
 
     @Serializable
-    data object MainScreenNav : RootNavGraph()
+    data object BottomNavBar : RootNavGraph
 }

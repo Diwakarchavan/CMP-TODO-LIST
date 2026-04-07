@@ -13,7 +13,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import io.jadu.todoApp.ui.route.NavRoute
 import io.jadu.todoApp.ui.route.RootNavGraph
 import io.jadu.todoApp.ui.screens.navigations.RootNavigation
@@ -23,9 +22,7 @@ import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
-fun MainScreen(
-    navController: NavHostController
-) {
+fun MainScreen() {
     val onBoardingViewModel: OnBoardingViewModel = koinInject()
     val scope = rememberCoroutineScope()
 
@@ -38,10 +35,6 @@ fun MainScreen(
             startDestination = when(currentRoute) {
                 NavRoute.Onboarding -> {
                     RootNavGraph.Onboarding
-                }
-
-                NavRoute.AboutUs -> {
-                    RootNavGraph.MainScreenNav
                 }
 
                 else -> {
@@ -65,7 +58,6 @@ fun MainScreen(
             }
         } else {
             RootNavigation(
-                navController = navController,
                 startDestination = startDestination
             )
         }
