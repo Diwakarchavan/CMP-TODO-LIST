@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,7 +44,7 @@ import io.jadu.todoApp.ui.theme.TodoColors
 fun BottomBarNavigation() {
     val navigationState = rememberNavigationState(
         startRoute = NavRoute.Home,
-        topLevelRoutes = setOf(
+        topLevelRoutes = listOf(
             NavRoute.Home,
             NavRoute.TaskScreen,
             NavRoute.AddProject,
@@ -55,13 +56,10 @@ fun BottomBarNavigation() {
 
     val bottomNavItems = getNavItems()
 
-    var selectedIndex by rememberSaveable { mutableStateOf(0) }
-
-    val matchedIndex = bottomNavItems.indexOfFirst { item ->
-        navigationState.topLevelRoute == item.route
-    }
-    if (matchedIndex >= 0) {
-        selectedIndex = matchedIndex
+    val selectedIndex by remember {
+        derivedStateOf {
+            bottomNavItems.indexOfFirst { it.route == navigationState.topLevelRoute }.coerceAtLeast(0)
+        }
     }
 
     val entryProvider = entryProvider<NavKey> {
