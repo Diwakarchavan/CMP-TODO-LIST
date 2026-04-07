@@ -2,6 +2,9 @@
 
 This is a Todo List application built using Kotlin Multiplatform and Compose Multiplatform. It allows you to manage your tasks and projects efficiently on both Android and iOS devices using a single codebase.
 
+| **Spread the word!** | [![GitHub stars](https://img.shields.io/github/stars/Rohit-554/CMP-TODO-LIST?style=social)](https://github.com/Rohit-554/CMP-TODO-LIST) |
+| :--- | :--- |
+
 ## Demo
 
 [Screen_recording_20251213_010429.webm](https://github.com/user-attachments/assets/245ef69a-1d8f-4c10-806f-a6580a787dc2)
