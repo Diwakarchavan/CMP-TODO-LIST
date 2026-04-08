@@ -1,49 +1,34 @@
 package io.jadu.todoApp.ui.screens.navigations
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import io.jadu.todoApp.ui.route.RootNavGraph
-
 
 /**
  * Root Navigation that decides between Onboarding and BottomNavBar app flow
  */
 @Composable
 fun RootNavigation(
-    navController: NavHostController,
     startDestination: RootNavGraph
 ) {
-    NavHost(
-        navController = navController,
-        startDestination = startDestination
-    ) {
-        // Onboarding Navigation Graph
-        composable<RootNavGraph.Onboarding> {
-            val onboardingNavController = rememberNavController()
+    var currentGraph by rememberSaveable(startDestination, stateSaver = RootNavKeySaver) {
+        mutableStateOf(startDestination)
+    }
+
+    when (currentGraph) {
+        is RootNavGraph.Onboarding -> {
             OnboardingNavigation(
-                navController = onboardingNavController,
                 onOnboardingComplete = {
-                    navController.navigate(RootNavGraph.BottomNavBar) {
-                        popUpTo(RootNavGraph.Onboarding) {
-                            inclusive = true
-                        }
-                    }
+                    currentGraph = RootNavGraph.BottomNavBar
                 }
             )
         }
 
-        // BottomNavBar App Navigation Graph
-        composable<RootNavGraph.BottomNavBar> {
-            val bottomNavBarController = rememberNavController()
-            BottomBarNavigation(navController = bottomNavBarController)
-        }
-
-        composable<RootNavGraph.MainScreenNav> {
-            MainScreenNavigation(rememberNavController())
+        is RootNavGraph.BottomNavBar -> {
+            BottomBarNavigation()
         }
     }
 }
-

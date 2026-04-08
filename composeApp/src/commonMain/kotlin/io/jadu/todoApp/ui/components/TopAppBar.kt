@@ -18,7 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.navigation.NavController
 import io.jadu.todoApp.ui.theme.BodyXLarge
 import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
@@ -34,7 +33,7 @@ import todo_list.composeapp.generated.resources.todays_tasks
 fun TodoTopAppBar(
     modifier: Modifier = Modifier,
     title: String = stringResource(Res.string.todays_tasks),
-    navController: NavController,
+    onBack: (() -> Unit)? = null,
     actionImage : DrawableResource = Res.drawable.notification,
     onActionClick : (() -> Unit)? = null
 ) {
@@ -47,7 +46,7 @@ fun TodoTopAppBar(
         Image(
             modifier = Modifier
                 .size(Spacing.s6)
-                .bounceClickable { navController.navigateUp() },
+                .bounceClickable { onBack?.invoke() },
             painter = painterResource(Res.drawable.arrow___left),
             contentDescription = ""
         )
