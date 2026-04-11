@@ -491,7 +491,7 @@ private fun DarkModeToggle(
                 Text(
                     text = stringResource(Res.string.settings_dark_mode_desc),
                     style = BodySmall(),
-                    color = Color.Gray
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
             Switch(
