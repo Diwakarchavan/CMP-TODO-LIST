@@ -1,6 +1,7 @@
 package io.jadu
 
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -15,9 +16,9 @@ import org.koin.compose.koinInject
 @Preview
 fun App() {
     val themeRepository: ThemeRepository = koinInject()
-    val isDarkMode by themeRepository.isDarkMode.collectAsState(initial = false)
+    val isDarkMode by themeRepository.isDarkMode.collectAsState(initial = null)
 
-    TodoAppTheme(darkTheme = isDarkMode) {
+    TodoAppTheme(darkTheme = isDarkMode ?: isSystemInDarkTheme()) {
         val navController = rememberNavController()
         MainScreen(navController)
     }

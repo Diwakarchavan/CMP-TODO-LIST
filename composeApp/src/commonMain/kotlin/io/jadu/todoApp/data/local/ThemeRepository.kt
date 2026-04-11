@@ -11,13 +11,19 @@ class ThemeRepository(private val dataStore: DataStore<Preferences>) {
 
     private val DARK_MODE_KEY = booleanPreferencesKey("dark_mode")
 
-    val isDarkMode: Flow<Boolean> = dataStore.data.map { preferences ->
-        preferences[DARK_MODE_KEY] ?: false
+    val isDarkMode: Flow<Boolean?> = dataStore.data.map { preferences ->
+        preferences[DARK_MODE_KEY]
     }
 
     suspend fun setDarkMode(enabled: Boolean) {
         dataStore.edit { preferences ->
             preferences[DARK_MODE_KEY] = enabled
+        }
+    }
+
+    suspend fun resetToSystem() {
+        dataStore.edit { preferences ->
+            preferences.remove(DARK_MODE_KEY)
         }
     }
 }

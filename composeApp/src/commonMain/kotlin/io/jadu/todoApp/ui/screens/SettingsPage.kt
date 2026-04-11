@@ -25,6 +25,7 @@ import androidx.compose.material.icons.automirrored.filled.NavigateNext
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -420,7 +421,7 @@ fun SettingsPage(
 
                             // Action Buttons
                             DarkModeToggle(
-                                isDarkMode = isDarkMode,
+                                isDarkMode = isDarkMode ?: isSystemInDarkTheme(),
                                 onToggle = { viewModel.toggleDarkMode(it) }
                             )
                             BorderButton(

@@ -62,11 +62,11 @@ class SettingsViewModel(
         initialValue = SettingsUiState()
     )
 
-    val isDarkMode: StateFlow<Boolean> = themeRepository.isDarkMode
+    val isDarkMode: StateFlow<Boolean?> = themeRepository.isDarkMode
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = false
+            initialValue = null
         )
 
     fun toggleDarkMode(enabled: Boolean) {
