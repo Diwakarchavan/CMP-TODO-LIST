@@ -11,23 +11,23 @@ import kotlinx.coroutines.flow.map
 
 class ThemeRepository(private val dataStore: DataStore<Preferences>) {
 
-    private val DARK_MODE_KEY = booleanPreferencesKey("dark_mode")
+    private val darkModeKey = booleanPreferencesKey("dark_mode")
 
     val isDarkMode: Flow<Boolean?> = dataStore.data
         .catch { emit(emptyPreferences()) }
         .map { preferences ->
-            preferences[DARK_MODE_KEY]
+            preferences[darkModeKey]
         }
 
     suspend fun setDarkMode(enabled: Boolean) {
         dataStore.edit { preferences ->
-            preferences[DARK_MODE_KEY] = enabled
+            preferences[darkModeKey] = enabled
         }
     }
 
     suspend fun resetToSystem() {
         dataStore.edit { preferences ->
-            preferences.remove(DARK_MODE_KEY)
+            preferences.remove(darkModeKey)
         }
     }
 }
