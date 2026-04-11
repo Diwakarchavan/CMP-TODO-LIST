@@ -25,9 +25,4 @@ class ThemeRepository(private val dataStore: DataStore<Preferences>) {
         }
     }
 
-    suspend fun resetToSystem() {
-        dataStore.edit { preferences ->
-            preferences.remove(darkModeKey)
-        }
-    }
 }
