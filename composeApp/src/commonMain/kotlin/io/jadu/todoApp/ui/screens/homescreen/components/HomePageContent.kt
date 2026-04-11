@@ -24,10 +24,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import io.jadu.todoApp.ui.notification.NotificationViewModel
 import io.jadu.todoApp.ui.notification.rememberActivity
-import io.jadu.todoApp.ui.route.NavRoute
 import io.jadu.todoApp.ui.theme.BodyLarge
 import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
@@ -44,7 +42,7 @@ import todo_list.composeapp.generated.resources.no_task_groups
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePageContent(
-    navController: NavController,
+    onNavigateToTaskScreen: () -> Unit,
     viewModel: HomeScreenViewModel = koinInject(),
     notificationVM: NotificationViewModel = koinInject()
 ) {
@@ -85,9 +83,7 @@ fun HomePageContent(
             VSpacer(Spacing.s6)
             TaskProgressCard(
                 progress = uiState.todayProgress,
-                onViewTaskClick = {
-                    navController.navigate(NavRoute.TaskScreen)
-                }
+                onViewTaskClick = onNavigateToTaskScreen
             )
             if(uiState.inProgressTasks.isNotEmpty()) {
                 VSpacer(Spacing.s4)

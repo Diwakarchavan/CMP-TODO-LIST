@@ -57,7 +57,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import io.github.ismoy.imagepickerkmp.domain.extensions.loadBytes
 import io.github.ismoy.imagepickerkmp.domain.models.GalleryPhotoResult
@@ -66,7 +65,6 @@ import io.jadu.todoApp.ui.components.TodoElevatedCard
 import io.jadu.todoApp.ui.components.TodoTextField
 import io.jadu.todoApp.ui.components.TodoTopAppBar
 import io.jadu.todoApp.ui.components.bounceClickable
-import io.jadu.todoApp.ui.route.NavRoute
 import io.jadu.todoApp.ui.screens.homescreen.components.showSnackBar
 import io.jadu.todoApp.ui.theme.BodyLarge
 import io.jadu.todoApp.ui.theme.BodyNormal
@@ -107,8 +105,9 @@ import todo_list.composeapp.generated.resources.user_octagon
 
 @Composable
 @Preview
-fun SettingsPage(
-    navHostController: NavHostController,
+fun SettingsScreen(
+    onNavigateToAboutUs: () -> Unit,
+    onBack: () -> Unit,
     viewModel: SettingsViewModel = koinInject()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -170,7 +169,7 @@ fun SettingsPage(
             TodoTopAppBar(
                 modifier = Modifier.systemBarsPadding(),
                 title = stringResource(Res.string.settings_title),
-                navController = navHostController
+                onBack = onBack
             )
         }
     ) { padding ->
@@ -427,7 +426,7 @@ fun SettingsPage(
                             BorderButton(
                                 stringResource(Res.string.settings_about),
                                 onClick = {
-                                    navHostController.navigate(NavRoute.AboutUs)
+                                    onNavigateToAboutUs()
                                 },
                                 subtitle = stringResource(Res.string.settings_about_desc)
                             )

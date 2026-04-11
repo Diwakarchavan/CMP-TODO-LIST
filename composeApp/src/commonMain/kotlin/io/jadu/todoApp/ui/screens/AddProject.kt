@@ -25,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
 import io.jadu.todoApp.ui.components.CurvedButton
 import io.jadu.todoApp.ui.components.DatePickerDialog
 import io.jadu.todoApp.ui.components.EditDetailCard
@@ -60,7 +59,8 @@ import todo_list.composeapp.generated.resources.saving
 @Composable
 @Preview
 fun AddProject(
-    navController: NavHostController,
+    onBack: () -> Unit,
+    onSaveSuccess: () -> Unit,
     viewModel: AddProjectViewModel = koinInject()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -84,7 +84,7 @@ fun AddProject(
                         positiveMessage = true
                     )
                     viewModel.onEvent(AddProjectUiEvent.OnUiReset)
-                    navController.navigateUp()
+                    onSaveSuccess()
                 }
                 is UiEvent.OnLoading -> {
                     //showing loading
@@ -106,7 +106,7 @@ fun AddProject(
             TodoTopAppBar(
                 title = stringResource(Res.string.add_project_title),
                 modifier = Modifier.systemBarsPadding(),
-                navController = navController
+                onBack = onBack
             )
 
             // This column is used to give padding to components included
