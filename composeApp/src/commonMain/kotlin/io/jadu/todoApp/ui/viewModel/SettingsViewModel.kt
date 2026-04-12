@@ -69,6 +69,18 @@ class SettingsViewModel(
             initialValue = null
         )
 
+    fun cycleTheme() {
+        viewModelScope.launch {
+            themeRepository.cycleTheme()
+        }
+    }
+
+    fun resetToAuto() {
+        viewModelScope.launch {
+            themeRepository.resetToAuto()
+        }
+    }
+
     fun toggleDarkMode(enabled: Boolean) {
         viewModelScope.launch {
             themeRepository.setDarkMode(enabled)
