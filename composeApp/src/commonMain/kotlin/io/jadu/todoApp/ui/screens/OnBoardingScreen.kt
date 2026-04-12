@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.jadu.todoApp.ui.components.CurvedButton
+import io.jadu.todoApp.ui.theme.LocalDarkTheme
 import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.viewModel.OnBoardingViewModel
@@ -137,20 +138,32 @@ fun TodoBackgroundScreen(
     shouldShowDotsAndIcons: Boolean = false,
     content: @Composable BoxWithConstraintsScope.() -> Unit = {},
 ) {
+    val isDark = LocalDarkTheme.current
+    val backgroundBrush = if (isDark) {
+        Brush.radialGradient(
+            colors = listOf(
+                TodoColors.DarkBackground.color,
+                TodoColors.DarkSurface.color,
+                TodoColors.DarkCard.color
+            ),
+            center = Offset(0.5f, 0.3f),
+            radius = 1500f
+        )
+    } else {
+        Brush.radialGradient(
+            colors = listOf(
+                TodoColors.Cream.color,
+                TodoColors.SoftCyan.color,
+                TodoColors.LightBlue.color
+            ),
+            center = Offset(0.5f, 0.3f),
+            radius = 1500f
+        )
+    }
     BoxWithConstraints (
         modifier = modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.radialGradient(
-                    colors = listOf(
-                        TodoColors.Cream.color,
-                        TodoColors.SoftCyan.color,
-                        TodoColors.LightBlue.color
-                    ),
-                    center = Offset(0.5f,0.3f),
-                    radius = 1500f
-                )
-            )
+            .background(brush = backgroundBrush)
     ) {
         FloatingElements(shouldShowDotsAndIcons = shouldShowDotsAndIcons)
         content()

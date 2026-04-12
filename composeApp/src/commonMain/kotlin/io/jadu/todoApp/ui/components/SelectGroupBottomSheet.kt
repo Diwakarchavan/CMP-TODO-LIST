@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -64,7 +65,7 @@ fun SelectGroupBottomSheet(
     )
 
     ModalBottomSheet(
-        containerColor = TodoColors.Light.color,
+        containerColor = MaterialTheme.colorScheme.surface,
         sheetState = sheetState,
         onDismissRequest = onDismiss,
         dragHandle = null

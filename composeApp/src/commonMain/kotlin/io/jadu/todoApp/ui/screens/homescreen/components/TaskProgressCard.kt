@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -69,8 +70,8 @@ fun TaskProgressCard(
                     buttonConfig = CurvedButtonConfig(
                         cornerRadius = 40f,
                         verticalBulgeFactor = 10f,
-                        containerColor = TodoColors.Light.color,
-                        contentColor = TodoColors.Dark.color,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        contentColor = MaterialTheme.colorScheme.onSurface,
                         gradientShadowColor = Color.Transparent
                     )
                 )

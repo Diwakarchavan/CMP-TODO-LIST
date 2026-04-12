@@ -20,6 +20,7 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -87,14 +88,11 @@ fun MonthCalendar(
         modifier = Modifier.padding(16.dp)
     ) {
         VSpacer(8.dp)
-        Box(
-            modifier =
-                Modifier
-                    .background(Color.White, shape = RoundedCornerShape(Spacing.s6))
-                    .padding(horizontal = 16.dp)
-                    .padding(bottom = 16.dp)
+        Surface(
+            shape = RoundedCornerShape(Spacing.s6),
+            color = MaterialTheme.colorScheme.surface
         ) {
-            Column(modifier = Modifier) {
+            Column(modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 16.dp)) {
                 SimpleCalendarTitle(
                     modifier = Modifier.padding(vertical = 10.dp, horizontal = 8.dp),
                     currentMonth = state.firstVisibleMonth,

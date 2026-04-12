@@ -2,14 +2,21 @@ package io.jadu
 
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import io.jadu.todoApp.data.local.ThemeRepository
 import io.jadu.todoApp.ui.screens.MainScreen
 import io.jadu.todoApp.ui.theme.TodoAppTheme
+import org.koin.compose.koinInject
 
 @Composable
-@Preview
 fun App() {
-    TodoAppTheme {
+    val themeRepository: ThemeRepository = koinInject()
+    val isDarkMode by themeRepository.isDarkMode.collectAsState(initial = null)
+
+    val resolvedDarkMode = isDarkMode ?: return
+
+    TodoAppTheme(darkTheme = resolvedDarkMode) {
         MainScreen()
     }
 }
