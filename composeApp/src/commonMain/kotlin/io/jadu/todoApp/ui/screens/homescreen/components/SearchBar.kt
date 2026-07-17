@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -42,9 +43,11 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import io.jadu.todoApp.data.model.TaskStatus
 import io.jadu.todoApp.data.model.TodoItem
+import io.jadu.todoApp.ui.components.bounceClickable
 import io.jadu.todoApp.ui.theme.BodyNormal
 import io.jadu.todoApp.ui.theme.BodySmall
 import io.jadu.todoApp.ui.theme.BodyXSmall
+import io.jadu.todoApp.ui.theme.LocalDarkTheme
 import io.jadu.todoApp.ui.theme.Spacing
 import io.jadu.todoApp.ui.theme.TodoColors
 import io.jadu.todoApp.ui.uiutils.VSpacer
@@ -60,17 +63,22 @@ fun SearchBar(
     modifier: Modifier = Modifier
 ) {
     val focusManager = LocalFocusManager.current
+    val isDark = LocalDarkTheme.current
     var isFocused by remember { mutableStateOf(false) }
 
+    val containerColor = if (isDark) MaterialTheme.colorScheme.surfaceVariant
+                         else TodoColors.LightPrimary.color
+
+    val unfocusedBorderColor = if (isDark)
+        TodoColors.DarkOutline.color.copy(alpha = 0.7f)
+    else
+        TodoColors.Primary.color.copy(alpha = 0.2f)
+
     val iconTint by animateColorAsState(
-        targetValue = if (isFocused || query.isNotEmpty()) TodoColors.Primary.color else TodoColors.Secondary.color,
+        targetValue = if (isFocused || query.isNotEmpty()) MaterialTheme.colorScheme.primary
+                      else MaterialTheme.colorScheme.secondary,
         animationSpec = tween(200),
         label = "searchIconTint"
-    )
-    val borderColor by animateColorAsState(
-        targetValue = if (isFocused) TodoColors.Primary.color else Color.Transparent,
-        animationSpec = tween(200),
-        label = "searchBorderColor"
     )
 
     OutlinedTextField(
@@ -81,14 +89,16 @@ fun SearchBar(
             .shadow(
                 elevation = if (isFocused) 6.dp else 2.dp,
                 shape = RoundedCornerShape(Spacing.s9),
-                ambientColor = TodoColors.Primary.color.copy(alpha = 0.08f),
-                spotColor = TodoColors.Primary.color.copy(alpha = 0.12f)
+                ambientColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.08f),
+                spotColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)
             )
             .onFocusChanged { isFocused = it.isFocused },
         placeholder = {
             Text(
                 text = stringResource(Res.string.search_hint),
-                style = BodyNormal().copy(color = TodoColors.Secondary.color.copy(alpha = 0.6f)),
+                style = BodyNormal().copy(
+                    color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.6f)
+                ),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -109,22 +119,24 @@ fun SearchBar(
                     Icon(
                         imageVector = Icons.Default.Clear,
                         contentDescription = null,
-                        tint = TodoColors.Secondary.color
+                        tint = MaterialTheme.colorScheme.secondary
                     )
                 }
             }
         },
         singleLine = true,
         shape = RoundedCornerShape(Spacing.s9),
-        textStyle = BodyNormal(),
+        textStyle = BodyNormal().copy(color = MaterialTheme.colorScheme.onSurface),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
         keyboardActions = KeyboardActions(onSearch = { focusManager.clearFocus() }),
         colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = borderColor,
-            unfocusedBorderColor = Color.Transparent,
-            focusedContainerColor = TodoColors.LightPrimary.color,
-            unfocusedContainerColor = TodoColors.LightPrimary.color.copy(alpha = 0.6f),
-            cursorColor = TodoColors.Primary.color
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            unfocusedBorderColor = unfocusedBorderColor,
+            focusedContainerColor = containerColor,
+            unfocusedContainerColor = containerColor,
+            cursorColor = MaterialTheme.colorScheme.primary,
+            focusedTextColor = MaterialTheme.colorScheme.onSurface,
+            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
         )
     )
 }
@@ -134,31 +146,39 @@ fun SearchBar(
 fun SearchResultItem(
     todo: TodoItem,
     searchQuery: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val isDark = LocalDarkTheme.current
+
     val statusColor = when (todo.status) {
         TaskStatus.DONE -> TodoColors.Emerald.color
         TaskStatus.IN_PROGRESS -> TodoColors.Orange.color
-        TaskStatus.TO_DO -> TodoColors.Primary.color
+        TaskStatus.TO_DO -> MaterialTheme.colorScheme.primary
     }
+
+    val cardBackground = MaterialTheme.colorScheme.surface
+    val highlightColor = if (isDark) MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
+                         else TodoColors.LightPrimary.color
+    val tagBackground = if (isDark) MaterialTheme.colorScheme.primary.copy(alpha = 0.18f)
+                        else TodoColors.LightPrimary.color
+    val tagHighlight = if (isDark) MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)
+                       else Color(0xFFD5C8FF)
 
     Box(
         modifier = modifier
             .fillMaxWidth()
+            .bounceClickable(pressedScale = 0.97f, onClick = onClick)
             .shadow(
                 elevation = 2.dp,
                 shape = RoundedCornerShape(Spacing.s4),
-                ambientColor = TodoColors.Black.color.copy(alpha = 0.04f),
-                spotColor = TodoColors.Black.color.copy(alpha = 0.08f)
+                ambientColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.04f),
+                spotColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.08f)
             )
-            .background(
-                color = TodoColors.Light.color,
-                shape = RoundedCornerShape(Spacing.s4)
-            )
+            .background(color = cardBackground, shape = RoundedCornerShape(Spacing.s4))
             .padding(Spacing.s4)
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            // Status chip
             Box(
                 modifier = Modifier
                     .background(
@@ -178,41 +198,38 @@ fun SearchResultItem(
 
             VSpacer(Spacing.s2)
 
-            // Highlighted title
             Text(
-                text = highlightText(todo.title, searchQuery, TodoColors.LightPrimary.color),
-                style = BodyNormal().copy(fontWeight = FontWeight.SemiBold),
+                text = highlightText(todo.title, searchQuery, highlightColor),
+                style = BodyNormal().copy(
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface
+                ),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
 
-            // Highlighted description
             if (todo.description.isNotBlank()) {
                 VSpacer(Spacing.s1)
                 Text(
-                    text = highlightText(todo.description, searchQuery, TodoColors.LightPrimary.color),
-                    style = BodySmall().copy(color = TodoColors.Secondary.color),
+                    text = highlightText(todo.description, searchQuery, highlightColor),
+                    style = BodySmall().copy(color = MaterialTheme.colorScheme.secondary),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
             }
 
-            // Tags as small chips
             if (todo.tags.isNotEmpty()) {
                 VSpacer(Spacing.s2)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(Spacing.s1)) {
                     todo.tags.forEach { tag ->
                         Box(
                             modifier = Modifier
-                                .background(
-                                    color = TodoColors.LightPrimary.color,
-                                    shape = RoundedCornerShape(Spacing.s2)
-                                )
+                                .background(color = tagBackground, shape = RoundedCornerShape(Spacing.s2))
                                 .padding(horizontal = Spacing.s2, vertical = Spacing.sHalf)
                         ) {
                             Text(
-                                text = highlightText("#$tag", searchQuery, Color(0xFFD5C8FF)),
-                                style = BodyXSmall().copy(color = TodoColors.Primary.color)
+                                text = highlightText("#$tag", searchQuery, tagHighlight),
+                                style = BodyXSmall().copy(color = MaterialTheme.colorScheme.primary)
                             )
                         }
                     }

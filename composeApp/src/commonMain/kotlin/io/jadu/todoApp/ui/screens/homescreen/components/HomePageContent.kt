@@ -45,6 +45,7 @@ import todo_list.composeapp.generated.resources.task_group
 @Composable
 fun HomePageContent(
     onNavigateToTaskScreen: () -> Unit,
+    onNavigateToEditTask: (Long) -> Unit,
     viewModel: HomeScreenViewModel = koinInject(),
     notificationVM: NotificationViewModel = koinInject()
 ) {
@@ -117,7 +118,8 @@ fun HomePageContent(
                         VSpacer(Spacing.s2)
                         SearchResultItem(
                             todo = todo,
-                            searchQuery = uiState.searchQuery
+                            searchQuery = uiState.searchQuery,
+                            onClick = { onNavigateToEditTask(todo.id) }
                         )
                     }
                 }
