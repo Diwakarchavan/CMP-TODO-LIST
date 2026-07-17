@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -17,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import io.jadu.todoApp.ui.theme.Spacing
-import io.jadu.todoApp.ui.theme.TodoColors
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -42,7 +42,7 @@ fun DatePickerDialog(
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = RoundedCornerShape(Spacing.s6),
-            color = TodoColors.White.color
+            color = MaterialTheme.colorScheme.surface
         ) {
             Column(modifier = Modifier) {
                 MonthCalendar(

@@ -26,5 +26,14 @@ enum class TodoColors(val color: Color) {
     Orchid(Color(0xFFDA70D6)),
     Turquoise(Color(0xFF00CED1)),
     Gold(Color(0xFFFFD700)),
-    DarkPurple(Color(0xFF9370DB))
+    DarkPurple(Color(0xFF9370DB)),
+
+    // Dark theme palette
+    DarkBackground(Color(0xFF121218)),
+    DarkSurface(Color(0xFF1E1E2E)),
+    DarkCard(Color(0xFF252535)),
+    DarkOnSurface(Color(0xFFE8E8F0)),
+    DarkSecondary(Color(0xFFB0A8CC)),
+    DarkPrimary(Color(0xFF9B7FF5)),
+    DarkOutline(Color(0xFF4A4A6A))
 }

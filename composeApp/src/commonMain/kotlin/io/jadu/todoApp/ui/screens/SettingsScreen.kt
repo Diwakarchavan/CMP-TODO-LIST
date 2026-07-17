@@ -28,6 +28,8 @@ import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -89,6 +91,8 @@ import todo_list.composeapp.generated.resources.settings_feedback_desc
 import todo_list.composeapp.generated.resources.settings_feedback_plac
 import todo_list.composeapp.generated.resources.settings_infocard_compl
 import todo_list.composeapp.generated.resources.settings_infocard_remain
+import todo_list.composeapp.generated.resources.settings_dark_mode
+import todo_list.composeapp.generated.resources.settings_dark_mode_desc
 import todo_list.composeapp.generated.resources.settings_report
 import todo_list.composeapp.generated.resources.settings_report_desc
 import todo_list.composeapp.generated.resources.settings_report_plac
@@ -106,11 +110,13 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = koinInject()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val isDarkMode by viewModel.isDarkMode.collectAsState()
 
     var name by remember { mutableStateOf("") }
     var isEditing by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
     var showDialog by remember { mutableStateOf(false) }
+    var showThemeDialog by remember { mutableStateOf(false) }
     val isFeedback = remember { mutableStateOf(false) }
 
     // Image picker state
@@ -413,6 +419,10 @@ fun SettingsScreen(
                             Spacer(modifier = Modifier.height(16.dp))
 
                             // Action Buttons
+                            ThemeModeSelector(
+                                themeMode = resolveThemeMode(isDarkMode),
+                                onOpenThemeDialog = { showThemeDialog = true }
+                            )
                             BorderButton(
                                 stringResource(Res.string.settings_about),
                                 onClick = {
@@ -454,7 +464,146 @@ fun SettingsScreen(
                 isFeedbackClicked = isFeedback.value
             )
         }
+
+        if (showThemeDialog) {
+            ThemeSelectionDialog(
+                currentTheme = resolveThemeMode(isDarkMode),
+                onThemeSelected = { selectedTheme ->
+                    when (selectedTheme) {
+                        ThemeMode.Auto -> viewModel.resetToAuto()
+                        ThemeMode.Dark -> viewModel.toggleDarkMode(true)
+                        ThemeMode.Light -> viewModel.toggleDarkMode(false)
+                    }
+                    showThemeDialog = false
+                },
+                onDismiss = { showThemeDialog = false }
+            )
+        }
     }
+}
+
+enum class ThemeMode(val label: String, val icon: String) {
+    Auto("Auto", "\uD83C\uDF10"),
+    Dark("Dark", "\uD83C\uDF19"),
+    Light("Light", "\u2600\uFE0F")
+}
+
+fun resolveThemeMode(isDarkMode: Boolean?): ThemeMode = when (isDarkMode) {
+    null -> ThemeMode.Auto
+    true -> ThemeMode.Dark
+    false -> ThemeMode.Light
+}
+
+@Composable
+private fun ThemeModeSelector(
+    themeMode: ThemeMode,
+    onOpenThemeDialog: () -> Unit
+) {
+    TodoElevatedCard(
+        modifier = Modifier.padding(horizontal = Spacing.s4),
+        onClick = onOpenThemeDialog
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column {
+                Text(
+                    text = stringResource(Res.string.settings_dark_mode),
+                    style = BodyLarge().copy(fontWeight = FontWeight.Bold),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = resolveThemeModeDescription(themeMode),
+                    style = BodySmall(),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "${themeMode.icon} ${themeMode.label}",
+                    style = BodyNormal(),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.NavigateNext,
+                    contentDescription = "Change theme mode",
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
+            }
+        }
+    }
+}
+
+fun resolveThemeModeDescription(themeMode: ThemeMode): String = when (themeMode) {
+    ThemeMode.Auto -> "Follows system theme"
+    ThemeMode.Dark -> "Always use dark theme"
+    ThemeMode.Light -> "Always use light theme"
+}
+
+@Composable
+private fun ThemeSelectionDialog(
+    currentTheme: ThemeMode,
+    onThemeSelected: (ThemeMode) -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = "Choose Theme Mode",
+                style = H2TextStyle().copy(fontWeight = FontWeight.Bold),
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        },
+        text = {
+            Column {
+                ThemeMode.entries.forEach { theme ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .bounceClickable {
+                                onThemeSelected(theme)
+                            }
+                            .padding(vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = theme == currentTheme,
+                            onClick = { onThemeSelected(theme) },
+                            colors = RadioButtonDefaults.colors(
+                                selectedColor = MaterialTheme.colorScheme.primary,
+                                unselectedColor = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        )
+                        Text(
+                            text = "${theme.icon}  ${theme.label}",
+                            style = BodyNormal(),
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = resolveThemeModeDescription(currentTheme),
+                    style = BodySmall(),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        },
+        confirmButton = {},
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    )
 }
 
 @Composable
@@ -531,7 +680,7 @@ private fun TextFieldDialogue(
     var text by remember { mutableStateOf("") }
 
     AlertDialog(
-        containerColor = TodoColors.Light.color,
+        containerColor = MaterialTheme.colorScheme.surface,
         onDismissRequest = onDismissRequest,
         title = {
             Text(

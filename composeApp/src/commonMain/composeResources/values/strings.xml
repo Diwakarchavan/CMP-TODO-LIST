@@ -20,6 +20,8 @@
     <string name="settings_edit_name_photo">Edit Your Name and Photo</string>
     <string name="settings_infocard_compl">Completed</string>
     <string name="settings_infocard_remain">Remaining</string>
+    <string name="settings_dark_mode">Dark Mode</string>
+    <string name="settings_dark_mode_desc">Switch between light and dark theme</string>
     <string name="settings_about">About Us</string>
     <string name="settings_about_desc">Know more about us</string>
     <string name="settings_feedback">Feedback</string>

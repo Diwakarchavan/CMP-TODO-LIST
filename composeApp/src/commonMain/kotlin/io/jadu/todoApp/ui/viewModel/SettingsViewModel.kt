@@ -2,6 +2,7 @@ package io.jadu.todoApp.ui.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.jadu.todoApp.data.local.ThemeRepository
 import io.jadu.todoApp.data.local.TodoDao
 import io.jadu.todoApp.data.local.UserProfileDao
 import io.jadu.todoApp.data.model.UserProfile
@@ -25,7 +26,8 @@ data class SettingsUiState(
 
 class SettingsViewModel(
     private val userProfileDao: UserProfileDao,
-    private val todoDao: TodoDao
+    private val todoDao: TodoDao,
+    private val themeRepository: ThemeRepository
 ) : ViewModel() {
 
     private val _isLoading = MutableStateFlow(false)
@@ -59,6 +61,31 @@ class SettingsViewModel(
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = SettingsUiState()
     )
+
+    val isDarkMode: StateFlow<Boolean?> = themeRepository.isDarkMode
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = null
+        )
+
+    fun cycleTheme() {
+        viewModelScope.launch {
+            themeRepository.cycleTheme()
+        }
+    }
+
+    fun resetToAuto() {
+        viewModelScope.launch {
+            themeRepository.resetToAuto()
+        }
+    }
+
+    fun toggleDarkMode(enabled: Boolean) {
+        viewModelScope.launch {
+            themeRepository.setDarkMode(enabled)
+        }
+    }
 
     fun updateUserProfile(name: String, photoData: ByteArray?) {
         viewModelScope.launch {
